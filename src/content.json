@@ -1,0 +1,414 @@
+{
+  "version": 1,
+  "spark": {
+    "QUIEN": {
+      "name": "QUIÉN",
+      "color": "#FFD84D",
+      "items": [
+        "el que promete lo que no puede cumplir",
+        "el que vuelve a un lugar que juró no pisar",
+        "el que cuida a quien le hizo daño",
+        "el que hereda algo que no quiere",
+        "el que sabe un secreto que destruiría a alguien que ama",
+        "el que se hace pasar por otro y empieza a preferir esa mentira",
+        "el último que queda de algo"
+      ]
+    },
+    "GRIETA": {
+      "name": "GRIETA",
+      "color": "#FFC93F",
+      "items": [
+        "algo que se creía enterrado vuelve",
+        "dos personas que no debían coincidir, coinciden",
+        "hay que elegir entre dos lealtades",
+        "se descubre que la versión oficial de los hechos es falsa",
+        "llega una fecha límite imposible",
+        "alguien pide un favor que compromete todo",
+        "se pierde lo único que daba sentido a la rutina diaria"
+      ]
+    },
+    "FRICCION": {
+      "name": "FRICCIÓN",
+      "color": "#F3E08A",
+      "items": [
+        "la persona que puede ayudar es la que menos quiere hacerlo",
+        "la solución obvia está prohibida por otra razón",
+        "actuar bien y actuar a tiempo son incompatibles",
+        "el aliado tiene una agenda propia que no ha revelado",
+        "cada paso hacia el objetivo aleja de otra cosa que también importa"
+      ]
+    },
+    "YSI": {
+      "name": "Y SI…",
+      "color": "#CBB6FF",
+      "items": [
+        "¿y si nadie te cree?",
+        "¿y si la historia ya terminó y esto es lo que pasa después?",
+        "¿y si el que cuenta la historia miente?",
+        "¿y si ya conoces el final y el interés está en el cómo?",
+        "¿y si el villano tiene razón?"
+      ]
+    }
+  },
+  "craft": {
+    "PERSONAJE": {
+      "name": "Personaje",
+      "color": "#FFD84D",
+      "items": [
+        "Dale un secreto que ni el lector conoce todavía.",
+        "¿Qué haría si perdiera en 24h lo que más protege?",
+        "¿De qué se avergüenza y a quién se lo ocultaría hasta el final?",
+        "Dale una contradicción que nunca resuelve del todo.",
+        "¿Qué hace cuando nadie lo mira que no haría en público?",
+        "¿A quién no perdonaría aunque se lo pidiera de rodillas?"
+      ]
+    },
+    "CONFLICTO": {
+      "name": "Conflicto",
+      "color": "#FF9B7A",
+      "items": [
+        "Quita la opción más fácil de la mesa. ¿Qué queda?",
+        "¿Qué pasa si ambos bandos tienen razón?",
+        "Sube el coste de no actuar.",
+        "¿Quién sale ganando si nadie hace nada?",
+        "Convierte el conflicto externo en la misma herida que el conflicto interno."
+      ]
+    },
+    "MUNDO": {
+      "name": "Mundo",
+      "color": "#9DBBFF",
+      "items": [
+        "¿Qué regla de este mundo castiga precisamente a tu protagonista?",
+        "¿Quién se beneficia de que las cosas sigan como están?",
+        "¿Qué es normal aquí que sería escandaloso fuera?"
+      ]
+    },
+    "RELACION": {
+      "name": "Relación",
+      "color": "#CBB6FF",
+      "items": [
+        "¿Qué no se han dicho todavía y por qué?",
+        "¿Quién de los dos cambiaría más si el otro desapareciera?",
+        "Dale a esta relación un antes que el presente contradice."
+      ]
+    },
+    "OFICIO": {
+      "name": "Oficio",
+      "color": "#8FD9C0",
+      "items": [
+        "Busca en la segunda mitad de tu historia el eco invertido de algo que pasó en la primera mitad. Si no existe, créalo.",
+        "Coge la escena que más te cuesta y pregúntale: ¿dónde está su propio principio, medio y fin, en miniatura?",
+        "Escribe lo que tu personaje dice que quiere. Ahora escribe, en una frase, lo que en realidad necesita y que contradice lo primero.",
+        "En el ecuador de tu historia, ¿qué decisión hace que ya no se pueda volver a como estaba antes?",
+        "Termina esta frase con lo que tu historia afirma sobre la vida: «La vida funciona así porque…».",
+        "¿Qué premisa está demostrando tu historia sin que lo hayas decidido todavía? Escríbela en una frase de causa y efecto.",
+        "¿Qué parte del cuerpo o la clase social de tu personaje contradice lo que quiere su mente?",
+        "Dale a tu protagonista, en su primera escena, un gesto pequeño hacia alguien más débil que él, sin relación con la trama.",
+        "Quítale a tu protagonista, todo a la vez, lo que creía que le quedaba. ¿Qué hace en el minuto exacto después?",
+        "Dale a tu personaje exactamente lo que perseguía desde el principio. Ahora decide qué le costó que no puede recuperar.",
+        "En tu clímax, además de lo que gana o pierde en la trama, ¿qué ve tu personaje por primera vez sobre sí mismo?"
+      ]
+    }
+  },
+  "break": [
+    "Cambia el punto de vista de la escena al personaje que menos esperabas.",
+    "Quítale el diálogo a la escena entera.",
+    "Invierte quién tiene el poder en este momento.",
+    "Haz que mienta el personaje del que menos lo esperas.",
+    "Mete una fecha límite que no existía hace un párrafo.",
+    "Corta la escena tres líneas antes de donde creías que terminaba.",
+    "Deja que hable primero el personaje que normalmente calla.",
+    "Quita al personaje que crees imprescindible en esta escena.",
+    "Haz que alguien entre en el peor momento posible.",
+    "Cambia el lugar donde ocurre esto por el lugar menos cómodo posible.",
+    "Que el personaje consiga lo que quiere demasiado pronto. ¿Qué pasa después?",
+    "Reescribe la escena sabiendo que es la última vez que estos dos se ven.",
+    "Convierte el momento en que tu personaje cree haber ganado en el momento exacto en que lo pierde todo.",
+    "No expliques lo que siente el personaje: pon su cara junto a otra imagen (un objeto, un lugar) y deja que el corte haga el trabajo.",
+    "¿Qué sabe ya el público que tu protagonista todavía no sabe? Dale el momento exacto en que se entera.",
+    "Haz que tu personaje actúe esperando una reacción concreta, y dale la reacción opuesta.",
+    "¿Qué valor entra en positivo en esta escena y sale en negativo (o al revés)? Si no cambia nada, ¿por qué existe la escena?"
+  ],
+  "tipDay": [
+    {
+      "id": 1,
+      "front": "Si una frase suena «a escritura», táchala.",
+      "back": "El objetivo es que la prosa desaparezca detrás de la historia; cualquier frase que llame la atención sobre sí misma distrae de lo que importa: lo que pasa.",
+      "author": "Elmore Leonard",
+      "work": "10 Rules of Writing"
+    },
+    {
+      "id": 2,
+      "front": "No empieces describiendo el tiempo que hace.",
+      "back": "Abrir con el clima es la forma más fácil de perder al lector en la primera línea, porque no dice nada del conflicto ni del personaje.",
+      "author": "Elmore Leonard",
+      "work": "10 Rules of Writing"
+    },
+    {
+      "id": 3,
+      "front": "Todos los personajes deben querer algo, aunque sea un vaso de agua.",
+      "back": "Incluso en una escena mínima, dale a cada personaje presente un deseo concreto: eso convierte una escena en drama.",
+      "author": "Kurt Vonnegut",
+      "work": "8 Rules for Writing Fiction"
+    },
+    {
+      "id": 4,
+      "front": "Empieza la historia lo más cerca posible del final.",
+      "back": "No pierdas páginas preparando el terreno; entra tarde en la acción y deja que el lector reconstruya el resto por el camino.",
+      "author": "Kurt Vonnegut",
+      "work": "8 Rules for Writing Fiction"
+    },
+    {
+      "id": 5,
+      "front": "El camino al infierno está empedrado de adverbios.",
+      "back": "Los adverbios, sobre todo en las acotaciones de diálogo, suelen ser una muleta: si el diálogo y la acción funcionan, el adverbio sobra.",
+      "author": "Stephen King",
+      "work": "On Writing"
+    },
+    {
+      "id": 6,
+      "front": "Escribe con la puerta cerrada, reescribe con la puerta abierta.",
+      "back": "El primer borrador es solo para ti; la reescritura es cuando entra el lector en la sala.",
+      "author": "Stephen King",
+      "work": "On Writing"
+    },
+    {
+      "id": 7,
+      "front": "Permítete un primer borrador espantoso.",
+      "back": "Nadie escribe bien a la primera. La única forma de llegar a un buen borrador es aceptar que el primero puede (y debe) ser malo.",
+      "author": "Anne Lamott",
+      "work": "Bird by Bird"
+    },
+    {
+      "id": 8,
+      "front": "Ave por ave.",
+      "back": "Cuando la tarea completa abruma, redúcela al siguiente paso pequeño y concreto: la próxima escena, no la película entera.",
+      "author": "Anne Lamott",
+      "work": "Bird by Bird"
+    },
+    {
+      "id": 9,
+      "front": "Deja fuera más de lo que muestras.",
+      "back": "Su teoría del iceberg: si conoces bien lo que omites, esa parte invisible sigue dándole fuerza a lo que sí aparece en la página.",
+      "author": "Ernest Hemingway",
+      "work": null
+    },
+    {
+      "id": 10,
+      "front": "Si hay una pistola en la pared, tiene que disparar.",
+      "back": "No metas ningún elemento llamativo que no vaya a tener consecuencias: todo lo que el público nota, espera que importe.",
+      "author": "Antón Chéjov",
+      "work": null
+    },
+    {
+      "id": 11,
+      "front": "Los mejores personajes te sorprenden de forma convincente.",
+      "back": "Distinguía entre personajes planos (una sola nota) y redondos (capaces de sorprender sin dejar de ser creíbles). Apunta a lo segundo.",
+      "author": "E.M. Forster",
+      "work": "Aspects of the Novel"
+    },
+    {
+      "id": 12,
+      "front": "Nadie sabe nada.",
+      "back": "Ni los profesionales con más éxito pueden predecir qué va a funcionar: escribe lo que de verdad crees que es bueno, no lo que se supone que triunfa.",
+      "author": "William Goldman",
+      "work": "Adventures in the Screen Trade"
+    },
+    {
+      "id": 13,
+      "front": "Entra tarde, sal temprano.",
+      "back": "En cada escena, arranca lo más cerca posible del momento importante y córtala en cuanto ese momento pase: todo lo demás es aire.",
+      "author": "William Goldman",
+      "work": null
+    },
+    {
+      "id": 14,
+      "front": "El público tiene que saber siempre dónde está parado.",
+      "back": "Por muy sofisticada que sea la trama, el espectador nunca debería perderse: la claridad no es enemiga de la sofisticación.",
+      "author": "Billy Wilder",
+      "work": "atribuido"
+    },
+    {
+      "id": 15,
+      "front": "Si vas a mentirle al público, hazlo rápido y arréglalo rápido.",
+      "back": "Un giro engañoso solo funciona si el público lo descubre pronto; si dura demasiado, se siente traicionado en vez de sorprendido.",
+      "author": "Billy Wilder",
+      "work": "atribuido"
+    },
+    {
+      "id": 16,
+      "front": "Cada escena es una pelea por algo concreto.",
+      "back": "En su memo a guionistas de televisión insistía en que cada escena necesita un personaje que quiere algo específico y otro que se lo impide.",
+      "author": "David Mamet",
+      "work": null
+    },
+    {
+      "id": 17,
+      "front": "Dale a cada personaje una intención y un obstáculo.",
+      "back": "Por brillante que sea el diálogo, si el personaje no quiere algo concreto y algo no se lo impide, es solo ruido bonito.",
+      "author": "Aaron Sorkin",
+      "work": null
+    },
+    {
+      "id": 18,
+      "front": "Cuenta con imágenes lo que no necesitas contar con palabras.",
+      "back": "Antes de escribir una línea de diálogo, pregúntate si ese momento se puede transmitir con una acción o una mirada.",
+      "author": "Alexander Mackendrick",
+      "work": "On Film-making"
+    },
+    {
+      "id": 19,
+      "front": "El incidente incitador tiene que ser el hecho más fuerte del primer acto.",
+      "back": "Si el suceso que arranca la historia no es lo bastante grande, todo lo que viene después tiene que trabajar más para justificarse.",
+      "author": "Robert McKee",
+      "work": "Story"
+    },
+    {
+      "id": 20,
+      "front": "La trama gira en los puntos de giro, no en cualquier punto.",
+      "back": "Identificó los plot points como los momentos bisagra que empujan la historia en una dirección nueva, al final del acto, no antes ni después.",
+      "author": "Syd Field",
+      "work": "Screenplay"
+    },
+    {
+      "id": 21,
+      "front": "Dame lo mismo… pero diferente.",
+      "back": "El público quiere reconocer el género que le prometiste, pero con un giro que no haya visto: ni pura novedad ni pura repetición.",
+      "author": "Blake Snyder",
+      "work": "Save the Cat"
+    },
+    {
+      "id": 22,
+      "front": "Cada historia hace un argumento moral, lo sepas o no.",
+      "back": "La trama entera demuestra, con hechos, si una forma de actuar en el mundo funciona o no. Identificar cuál es la tuya ilumina decisiones tomadas a ciegas.",
+      "author": "John Truby",
+      "work": "The Anatomy of Story"
+    },
+    {
+      "id": 23,
+      "front": "El conflicto tiene que subir, nunca quedarse plano.",
+      "back": "Si dos escenas seguidas tienen el mismo nivel de tensión, una de las dos sobra.",
+      "author": "Lajos Egri",
+      "work": "The Art of Dramatic Writing"
+    },
+    {
+      "id": 24,
+      "front": "Quita cualquier escena que, si desapareciera, no cambiaría nada.",
+      "back": "La unidad de acción: una historia bien construida no tolera piezas sueltas. Si puedes quitar algo sin que se note, no pertenece ahí.",
+      "author": "Aristóteles",
+      "work": "Poética"
+    },
+    {
+      "id": 25,
+      "front": "El mentor no acompaña al héroe todo el viaje: le da algo y se queda atrás.",
+      "back": "Su papel no es resolver el problema del protagonista, es darle una herramienta, un consejo o una fe que tendrá que usar solo.",
+      "author": "Christopher Vogler",
+      "work": "The Writer's Journey"
+    },
+    {
+      "id": 26,
+      "front": "La llamada a la aventura llega como interrupción, no como invitación.",
+      "back": "El héroe rara vez elige el viaje: algo externo rompe su rutina y lo obliga a decidir.",
+      "author": "Joseph Campbell",
+      "work": "El héroe de las mil caras"
+    },
+    {
+      "id": 27,
+      "front": "Prueba a contar la historia desde el punto de vista de otro personaje.",
+      "back": "Replantear quién cuenta la historia revela agujeros de lógica y motivaciones que no veías desde el punto de vista original.",
+      "author": "Emma Coats",
+      "work": "principios de story de Pixar"
+    },
+    {
+      "id": 28,
+      "front": "Piensa en qué haría que TÚ actuaras así, no en qué es lógico para el personaje.",
+      "back": "En vez de justificar la acción desde fuera, pregúntate qué circunstancia te llevaría a ti a hacer exactamente eso.",
+      "author": "Emma Coats",
+      "work": "principios de story de Pixar"
+    },
+    {
+      "id": 29,
+      "front": "Escribe rápido, con alegría, sin miedo al ridículo del primer intento.",
+      "back": "El instinto y la velocidad en el primer borrador suelen producir verdad emocional que el análisis cuidadoso mata.",
+      "author": "Ray Bradbury",
+      "work": "Zen in the Art of Writing"
+    },
+    {
+      "id": 30,
+      "front": "Al terminar el borrador, anota qué no te convence, aunque no sepas arreglarlo.",
+      "back": "No intentes resolver cada problema en el momento en que lo detectas: anótalo y sigue; el arreglo se ve más claro con la historia entera delante.",
+      "author": "Neil Gaiman",
+      "work": null
+    },
+    {
+      "id": 31,
+      "front": "Si el lector deja de creer un segundo, has roto el sueño.",
+      "back": "Llamaba a esto el sueño ficticio continuo: cualquier detalle falso o torpe despierta al lector de golpe.",
+      "author": "John Gardner",
+      "work": "The Art of Fiction"
+    },
+    {
+      "id": 32,
+      "front": "El significado de una historia se demuestra con la acción, no se explica.",
+      "back": "Si tienes que parar la trama para explicar qué significa lo que acaba de pasar, la escena todavía no está haciendo su trabajo.",
+      "author": "Flannery O'Connor",
+      "work": null
+    },
+    {
+      "id": 33,
+      "front": "Escribo para descubrir qué pienso, no para exponer algo que ya sé.",
+      "back": "No esperes tener la historia resuelta en la cabeza antes de escribirla: a veces el primer borrador es el proceso de descubrir qué quieres decir.",
+      "author": "Joan Didion",
+      "work": null
+    },
+    {
+      "id": 34,
+      "front": "Si hay un libro que quieres leer y todavía no existe, ese es el que tienes que escribir.",
+      "back": "Al buscar inspiración, no mires solo lo que ya se ha hecho bien: mira el hueco, la historia que a ti te falta encontrar.",
+      "author": "Toni Morrison",
+      "work": null
+    },
+    {
+      "id": 35,
+      "front": "Lee tus diálogos en voz alta antes de darlos por terminados.",
+      "back": "El ritmo de una frase se nota al leerla en voz alta de una forma que no se nota en silencio: si te trabas al leerlo, el lector también.",
+      "author": "Ursula K. Le Guin",
+      "work": null
+    },
+    {
+      "id": 36,
+      "front": "Prohíbete los verbos de pensamiento: sintió, supo, se dio cuenta.",
+      "back": "En vez de decir que un personaje sintió miedo, muéstralo actuando como alguien con miedo: la acción física es más fuerte que la etiqueta emocional.",
+      "author": "Chuck Palahniuk",
+      "work": null
+    },
+    {
+      "id": 37,
+      "front": "Evita los prólogos.",
+      "back": "Si la información del prólogo importa, ya encontrarás dónde meterla dentro de la historia; si no importa, no hacía falta desde el principio.",
+      "author": "Elmore Leonard",
+      "work": "10 Rules of Writing"
+    },
+    {
+      "id": 38,
+      "front": "El tercer acto tiene que subir hacia un clímax, no ir apagándose.",
+      "back": "El error más común de los guiones flojos es un final que se desinfla en vez de acelerar.",
+      "author": "Billy Wilder",
+      "work": "atribuido"
+    },
+    {
+      "id": 39,
+      "front": "Muestra, no cuentes: pero solo cuando mostrar sea realmente más fuerte.",
+      "back": "Contar de forma directa no siempre es un error; lo es solo cuando existe una forma dramatizada más potente y la evitas por pereza.",
+      "author": "Robert McKee",
+      "work": "Story"
+    },
+    {
+      "id": 40,
+      "front": "El diálogo brillante no salva una escena sin conflicto.",
+      "back": "Por ingenioso que sea lo que dicen los personajes, si nadie quiere algo de nadie en esa escena, todo ese ingenio es decoración sobre una escena vacía.",
+      "author": "Aaron Sorkin",
+      "work": null
+    }
+  ]
+}
