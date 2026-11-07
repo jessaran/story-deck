@@ -49,5 +49,5 @@ React + TypeScript, Vite, Tailwind CSS, Motion (gestos y animaciones), Vaul (hoj
 
 ## Notas
 
-- Los iconos y el favicon salen de la ilustración del pato sobre azul. Para cambiarlos, sustituye los PNG de `public/icons/` y `public/favicon.png` manteniendo nombres y tamaños.
+- Los iconos y el favicon son las gafas y el pico del patito sobre azul; el mismo glifo en negro va en el dorso de los mazos. Para cambiarlos, sustituye los PNG de `public/icons/` y `public/favicon.png` manteniendo nombres y tamaños.
 - No hay notificaciones: la web no puede programar un aviso diario sin servidor. `src/lib/notifications.ts` deja la interfaz preparada para una futura versión nativa.

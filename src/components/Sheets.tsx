@@ -6,7 +6,7 @@ import { DRAW_DECK_SIZE, PALETTE } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
 import { useStore } from '../state/store'
-import { Flame } from './Flame'
+import { Mascot } from './Mascot'
 import { HistCard } from './HistCard'
 
 function Sheet({ open, onClose, top, title, children }: { open: boolean; onClose: () => void; top: number; title: string; children: ReactNode }) {
@@ -119,7 +119,7 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
 
         <div className="mt-2.5 bg-slate px-4 py-4 text-surface">
           <div className="flex items-center gap-2.5">
-            <Flame size={16} tone="white" />
+            <Mascot size={24} tone="white" />
             <div className="t-mono text-[8.5px] text-surface/80">Funciona sin conexión</div>
           </div>
           <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este teléfono: sin cuenta, sin servidor, sin sincronizar.</p>
