@@ -35,8 +35,8 @@ export function Craft() {
                 role="radio"
                 aria-checked={on}
                 onClick={() => pick(k)}
-                className={`t-ui flex h-[34px] min-w-0 flex-1 items-center justify-center border px-1 text-[9px] tracking-[0.05em] transition-colors ${on ? 'border-ink text-ink' : 'border-ink/20 bg-surface text-muted hover:border-ink hover:text-ink'}`}
-                style={on ? { background: craft[k].color, boxShadow: 'inset 0 -3px 0 #17150F' } : undefined}
+                className={`t-ui flex h-[34px] min-w-0 flex-1 items-center justify-center border px-1 text-[9px] tracking-[0.05em] transition-colors ${on ? 'border-ink bg-ink text-surface' : 'border-transparent text-ink hover:border-ink'}`}
+                style={on ? undefined : { background: m.color }}
               >
                 {craft[k].name}
               </button>
