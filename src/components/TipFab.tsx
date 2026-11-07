@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router'
 import { buzz } from '../lib/haptics'
-import { Flame } from './Flame'
+import fab from '../assets/tip-fab.webp'
 
-/** Botón flotante de Tip Day: la mascota, sin texto, flotando. */
+/** Botón flotante de Tip Day: el pato sobre el círculo azul, sin texto, flotando. */
 export function TipFab() {
   const navigate = useNavigate()
   return (
@@ -13,10 +13,10 @@ export function TipFab() {
         buzz(10)
         navigate('/tip')
       }}
-      className="anim-float-tip absolute right-5 z-40 flex size-16 items-center justify-center rounded-full bg-ink shadow-[0_10px_24px_rgba(23,21,15,.3)] transition-colors hover:bg-blue"
-      style={{ bottom: 'calc(var(--sab) + 58px + 16px)' }}
+      className="anim-float-tip absolute right-3 z-40 block w-[88px] transition-transform hover:scale-105 active:scale-95"
+      style={{ bottom: 'calc(var(--sab) + 58px + 10px)' }}
     >
-      <Flame size={28} tone="white" />
+      <img src={fab} alt="" aria-hidden draggable={false} width={240} height={217} className="block h-auto w-full drop-shadow-[0_8px_14px_rgba(23,21,15,.28)]" />
     </button>
   )
 }
