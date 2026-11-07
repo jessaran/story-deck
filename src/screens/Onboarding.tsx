@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flame } from '../components/Flame'
+import duck from '../assets/duck-peace.webp'
 import { LogoSplash } from '../components/LogoSplash'
 import { InstallSheet } from '../components/Sheets'
 import { buzz } from '../lib/haptics'
@@ -35,10 +35,9 @@ export function Onboarding() {
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
         <div className="anim-float-mascot">
-          <Flame size={71} />
+          <img src={duck} alt="" aria-hidden draggable={false} width={360} height={303} className="block h-auto w-[132px]" />
         </div>
-        <div className="t-mono mt-6 text-[9px] tracking-[0.24em] text-muted2">Hola</div>
-        <h1 className="t-display mt-3 text-[44px]">
+        <h1 className="t-display mt-6 text-[44px]">
           Bienvenid@
           <br />
           al <span className="text-blue">mazo.</span>
@@ -58,7 +57,7 @@ export function Onboarding() {
           enterKeyHint="go"
           className="mt-3 w-full border-b-2 border-ink bg-transparent pb-2 text-left font-sans text-[22px] font-bold outline-none placeholder:text-muted3 focus-visible:border-blue focus-visible:outline-none"
         />
-        <p className="t-serif mt-6 self-start text-left text-[15px] text-muted2">Tip Day te espera cada día en el botón de la llama.</p>
+        <p className="t-serif mt-6 self-start text-left text-[15px] text-muted2">Tip Day te espera cada día en el botón flotante del patito.</p>
         {showInstall && (
           <button type="button" onClick={() => setInstall(true)} className="t-ui mt-3 self-start border border-ink/30 px-3 py-2 text-[9.5px] text-muted">
             Instálala en tu pantalla de inicio ↗
