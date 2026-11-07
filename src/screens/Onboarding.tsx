@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Flame } from '../components/Flame'
+import { LogoSplash } from '../components/LogoSplash'
 import { InstallSheet } from '../components/Sheets'
 import { buzz } from '../lib/haptics'
 import { useStore } from '../state/store'
@@ -15,8 +16,11 @@ export function Onboarding() {
   const { finishOnboarding } = useStore()
   const [name, setName] = useState('')
   const [install, setInstall] = useState(false)
+  const [step, setStep] = useState<'logo' | 'name'>('logo')
   const ready = name.trim().length > 0
   const showInstall = isIosSafariNotInstalled()
+
+  if (step === 'logo') return <LogoSplash onDone={() => setStep('name')} />
 
   return (
     <form

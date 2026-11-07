@@ -1,11 +1,11 @@
-import { BREAK_COLOR, TIP_COLOR } from './content'
+import { BREAK_COLOR, PALETTE, TIP_COLOR } from './content'
 
 export type ModeKey = 'spark' | 'craft' | 'break'
 
 export const MODES = {
   spark: {
     title: 'Spark',
-    color: '#FFD84D',
+    color: PALETTE.spark,
     mech: '3 cartas de 3 mazos',
     sub: 'Empezar desde cero. Tres mazos, una tirada: la premisa nace del choque.',
     steps: [
@@ -18,7 +18,7 @@ export const MODES = {
   },
   craft: {
     title: 'Craft',
-    color: '#9DBBFF',
+    color: PALETTE.craft,
     mech: '1 carta dirigida',
     sub: 'Ya tienes algo y hay que trabajarlo. Elige qué elemento profundizar.',
     steps: [

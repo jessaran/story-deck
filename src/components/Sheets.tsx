@@ -2,7 +2,7 @@ import { X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Drawer } from 'vaul'
-import { DRAW_DECK_SIZE } from '../lib/content'
+import { DRAW_DECK_SIZE, PALETTE } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
 import { useStore } from '../state/store'
@@ -105,8 +105,8 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
 
         <div className="mt-5 grid grid-cols-2 gap-2.5">
           {[
-            [state.draws, 'Cartas robadas', '#FFD84D'],
-            [DRAW_DECK_SIZE, 'Cartas en el mazo', '#9DBBFF'],
+            [state.draws, 'Cartas robadas', PALETTE.spark],
+            [DRAW_DECK_SIZE, 'Cartas en el mazo', PALETTE.craft],
           ].map(([n, l, c]) => (
             <div key={l} className="px-4 pb-3.5 pt-4" style={{ background: c as string }}>
               <div className="font-display text-[34px] font-extrabold leading-none tracking-[-0.03em]">{n}</div>
