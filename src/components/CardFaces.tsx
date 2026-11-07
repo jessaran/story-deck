@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import { Mascot } from './Mascot'
 
 export type Face = { label: string; text: string; color: string }
 
@@ -10,16 +9,17 @@ export function cardFontSize(text: string, big: boolean) {
   return L > 150 ? 12.5 : L > 110 ? 14 : L > 75 ? 15.5 : 17
 }
 
-export function CardBack({ color, title, label, r = 18, markSize = 56, titleSize = 32 }: { color: string; title: string; label?: string; r?: number; markSize?: number; titleSize?: number }) {
+export function CardBack({ color, title, label, r = 18, titleSize = 32 }: { color: string; title: string; label?: string; r?: number; titleSize?: number }) {
   return (
     <div className="card-face flex flex-col items-center justify-center" style={{ background: color, ['--r' as string]: `${r}px` } as CSSProperties} aria-hidden>
       <div className="card-back-frame" />
-      <Mascot size={markSize} />
-      <div className="t-display mt-2.5" style={{ fontSize: titleSize }}>
-        {title}
-      </div>
+      {title && (
+        <div className="t-display" style={{ fontSize: titleSize }}>
+          {title}
+        </div>
+      )}
       {label && (
-        <div className="t-mono mt-3 text-[8px] text-center px-6" style={{ opacity: 'var(--dim)' }}>
+        <div className={`t-mono ${title ? 'mt-3' : ''} px-6 text-center text-[8px]`} style={{ opacity: 'var(--dim)' }}>
           {label}
         </div>
       )}

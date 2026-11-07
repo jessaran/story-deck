@@ -41,7 +41,12 @@ export function Spark() {
     prevTexts.current[k] = c.text
     const next = [...pulled, c]
     setPulled(next)
-    if (next.length === 3) later(() => setPhase('reveal'), 460)
+    if (next.length === 3)
+      later(() => {
+        // En el revelado, QUIÉN pasa a llamarse PROTAGONISTA.
+        setCards((cs) => cs.map((x) => (x.key === 'QUIEN' ? { ...x, label: 'PROTAGONISTA' } : x)))
+        setPhase('reveal')
+      }, 460)
     setCards(next)
   }
 
@@ -115,7 +120,7 @@ export function Spark() {
                     </div>
                     {filled && (
                       <div className="anim-bounce-in absolute inset-0" style={{ transformOrigin: '50% 82%' }}>
-                        <CardBack color={filled.color} title="" label={spark[k].name} r={10} markSize={34} titleSize={0} />
+                        <CardBack color={filled.color} title="" label={spark[k].name} r={10} titleSize={0} />
                       </div>
                     )}
                   </div>
@@ -160,7 +165,7 @@ export function Spark() {
                       style={{ animationDelay: `${(i >= 3 ? 0 : i) * 0.08}s`, transformOrigin: '50% 82%', perspective: 1000 }}
                     >
                       <div className="relative size-full" style={{ transformStyle: 'preserve-3d', transition: 'transform .72s var(--ease-flip)', transform: `rotateY(${c.flipped ? 180 : 0}deg)` }}>
-                        <CardBack color={c.color} title="" label={c.label} r={14} markSize={44} titleSize={0} />
+                        <CardBack color={c.color} title="" label={c.label} r={14} titleSize={0} />
                         <CardFront face={c} back big={false} r={14} pad={14} hidden />
                       </div>
                     </button>
