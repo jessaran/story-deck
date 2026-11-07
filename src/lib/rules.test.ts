@@ -12,7 +12,7 @@ describe('contenido', () => {
   })
   it('Spark siempre en orden QUIÉN → GRIETA → FRICCIÓN', () => {
     expect(SPARK_ORDER.map((k) => spark[k].name)).toEqual(['QUIÉN', 'GRIETA', 'FRICCIÓN'])
-    expect(seedPhrase('a', 'b', 'c')).toBe('Alguien: a. Todo se rompe cuando b. Y lo complica que c.')
+    expect(seedPhrase('a', 'b', 'c')).toBe('Protagonista: a. Todo se rompe cuando b. Y lo complica que c.')
   })
 })
 

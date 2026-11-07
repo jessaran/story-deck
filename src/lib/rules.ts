@@ -38,5 +38,5 @@ export function applyMatch(tip: TipState, id: number, today = localDay()): TipSt
 }
 
 export function seedPhrase(quien: string, grieta: string, friccion: string): string {
-  return `Alguien: ${quien}. Todo se rompe cuando ${grieta}. Y lo complica que ${friccion}.`
+  return `Protagonista: ${quien}. Todo se rompe cuando ${grieta}. Y lo complica que ${friccion}.`
 }
