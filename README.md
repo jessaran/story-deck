@@ -49,5 +49,5 @@ React + TypeScript, Vite, Tailwind CSS, Motion (gestos y animaciones), Vaul (hoj
 
 ## Notas
 
-- Los iconos se generaron a partir de `lumo-flame.png` sobre dorado `#EFCD54`. Si hay un icono definitivo, sustituye los PNG de `public/icons/` manteniendo nombres y tamaños.
+- Los iconos y el favicon salen de la ilustración del pato sobre azul. Para cambiarlos, sustituye los PNG de `public/icons/` y `public/favicon.png` manteniendo nombres y tamaños.
 - No hay notificaciones: la web no puede programar un aviso diario sin servidor. `src/lib/notifications.ts` deja la interfaz preparada para una futura versión nativa.

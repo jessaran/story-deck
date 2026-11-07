@@ -37,9 +37,9 @@ export function Onboarding() {
         <div className="anim-float-mascot">
           <Flame size={71} />
         </div>
-        <div className="t-mono mt-6 text-[9px] tracking-[0.24em] text-muted2">Hola, soy Lumo</div>
+        <div className="t-mono mt-6 text-[9px] tracking-[0.24em] text-muted2">Hola</div>
         <h1 className="t-display mt-3 text-[44px]">
-          Bienvenida
+          Bienvenid@
           <br />
           al <span className="text-blue">mazo.</span>
         </h1>
