@@ -34,7 +34,7 @@ export function Onboarding() {
       }}
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
-        <div className="anim-float-mascot">
+        <div>
           <img src={duck} alt="" aria-hidden draggable={false} width={360} height={303} className="block h-auto w-[132px]" />
         </div>
         <h1 className="t-display mt-6 text-[44px]">
