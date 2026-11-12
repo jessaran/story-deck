@@ -5,6 +5,7 @@ import { UpdatePrompt } from './components/UpdatePrompt'
 import { Break } from './screens/Break'
 import { Craft } from './screens/Craft'
 import { History } from './screens/History'
+import { Lab } from './screens/Lab'
 import { Home } from './screens/Home'
 import { Onboarding } from './screens/Onboarding'
 import { Spark } from './screens/Spark'
@@ -26,11 +27,12 @@ function Shell() {
           <Route path="/break" element={<Break />} />
           <Route path="/tip" element={<TipDay />} />
           <Route path="/ultimas" element={<History />} />
+          <Route path="/lab" element={<Lab />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
       {pathname === '/' && <TipFab />}
-      <NavBar />
+      {pathname !== '/lab' && <NavBar />}
     </>
   )
 }
