@@ -7,6 +7,7 @@ import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
 import { useStore } from '../state/store'
 import { Mascot } from './Mascot'
+import duck from '../assets/tip-fab.webp'
 import { HistCard } from './HistCard'
 
 function Sheet({ open, onClose, top, title, children }: { open: boolean; onClose: () => void; top: number; title: string; children: ReactNode }) {
@@ -198,6 +199,27 @@ export function InstallSheet({ open, onClose }: { open: boolean; onClose: () => 
             </li>
           ))}
         </ol>
+      </div>
+    </Sheet>
+  )
+}
+
+export function AboutSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <Sheet open={open} onClose={onClose} top={440} title="Sobre Story Deck">
+      <div className="relative px-[22px] pt-6" style={{ paddingBottom: 'calc(var(--sab) + 24px)' }}>
+        <Grabber />
+        <div className="flex items-start justify-between">
+          <div className="t-eyebrow">Sobre Story Deck</div>
+          <CloseBtn onClose={onClose} />
+        </div>
+        <div className="mt-4 flex items-center gap-4">
+          <img src={duck} alt="" aria-hidden draggable={false} width={240} height={217} className="block h-auto w-[96px] shrink-0" />
+          <p className="t-serif text-[17px] leading-[1.3]">Escribo guiones y dirijo. Juego con código y programo cosas que no tengo ni idea de cómo programar porque tengo TDAH.</p>
+        </div>
+        <a href="https://jessaran.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-5 w-full">
+          jessaran.com ↗
+        </a>
       </div>
     </Sheet>
   )

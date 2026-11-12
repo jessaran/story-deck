@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import logo from '../assets/logo-stack.webp'
 import { Header } from '../components/Header'
-import { AccountSheet, TutorialSheet } from '../components/Sheets'
+import { AboutSheet, AccountSheet, TutorialSheet } from '../components/Sheets'
 import { Stage } from '../components/Stage'
 import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
@@ -14,11 +14,19 @@ export function Home() {
   const navigate = useNavigate()
   const [tut, setTut] = useState<ModeKey | null>(null)
   const [account, setAccount] = useState(false)
+  const [about, setAbout] = useState(false)
   const keys: ModeKey[] = ['spark', 'craft', 'break']
 
   return (
     <>
-      <Header title={state.name ? 'Hola, ' : 'Hola'} accent={state.name || undefined} sub="Tres tiradas para tres momentos de escritura." color="#17150F" logo={logo} />
+      <Header title={state.name ? 'Hola, ' : 'Hola'} accent={state.name || undefined} sub="Tres tiradas para tres momentos de escritura." color="#17150F"
+        logo={logo}
+        aside={
+          <button type="button" onClick={() => setAbout(true)} className="t-ui text-[10px] text-muted2 transition-colors hover:text-ink">
+            About
+          </button>
+        }
+      />
       <Stage label="Inicio">
         <div className="px-[22px] pt-3.5">
           <button
@@ -95,6 +103,7 @@ export function Home() {
       </Stage>
       <TutorialSheet mode={tut} onClose={() => setTut(null)} />
       <AccountSheet open={account} onClose={() => setAccount(false)} />
+      <AboutSheet open={about} onClose={() => setAbout(false)} />
     </>
   )
 }

@@ -1,8 +1,9 @@
+import { Star } from 'lucide-react'
 import { useNavigate } from 'react-router'
+import { TIP_COLOR } from '../lib/content'
 import { buzz } from '../lib/haptics'
-import fab from '../assets/tip-fab.webp'
 
-/** Botón flotante de Tip Day: el pato sobre el círculo azul, sin texto, flotando. */
+/** Botón flotante de Tip Day: una estrella sobre círculo negro, sin texto, flotando. */
 export function TipFab() {
   const navigate = useNavigate()
   return (
@@ -13,10 +14,10 @@ export function TipFab() {
         buzz(10)
         navigate('/tip')
       }}
-      className="anim-float-tip absolute right-3 z-40 block w-[88px] transition-transform hover:scale-105 active:scale-95"
-      style={{ bottom: 'calc(var(--sab) + 18px)' }}
+      className="anim-float-tip absolute right-4 z-40 flex size-[60px] items-center justify-center rounded-full bg-ink shadow-[0_8px_18px_rgba(23,21,15,.3)] transition-transform hover:scale-105 active:scale-95"
+      style={{ bottom: 'calc(var(--sab) + 20px)' }}
     >
-      <img src={fab} alt="" aria-hidden draggable={false} width={240} height={217} className="block h-auto w-full drop-shadow-[0_8px_14px_rgba(23,21,15,.28)]" />
+      <Star aria-hidden size={26} strokeWidth={1.6} fill={TIP_COLOR} color={TIP_COLOR} />
     </button>
   )
 }
