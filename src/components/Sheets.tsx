@@ -119,7 +119,7 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
 
         <div className="mt-2.5 bg-slate px-4 py-4 text-surface">
           <div className="t-mono text-[8.5px] text-surface/80">Funciona sin conexión</div>
-          <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este dispositivo: sin cuenta, sin servidor, sin cookies, sin seguimiento.</p>
+          <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este dispositivo: sin cuenta, sin servidor, sin cookies. Solo se cuentan visitas de forma anónima.</p>
         </div>
         {!persisted && (
           <p role="alert" className="mt-2.5 border border-break px-4 py-3 text-[13px] font-medium text-muted">

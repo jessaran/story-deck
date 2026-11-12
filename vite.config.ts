@@ -9,16 +9,19 @@ const BASE = process.env.BASE_PATH ?? '/story-deck/'
 
 /**
  * Solo en producción (el servidor de desarrollo usa scripts en línea): política de contenido que
- * únicamente permite recursos propios. La app no habla con ningún servidor externo.
+ * únicamente permite recursos propios y el contador anónimo de Cloudflare Web Analytics (sin cookies).
  * GitHub Pages no deja poner cabeceras, así que va como <meta>.
  */
+// Token público de Cloudflare Web Analytics: va en la página, no es un secreto.
+const CF_BEACON = '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "439f12650ded468487948df19e2859de"}\'></script>'
+
 const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
+  "script-src 'self' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://cloudflareinsights.com",
   "manifest-src 'self'",
   "worker-src 'self'",
   "object-src 'none'",
@@ -30,7 +33,9 @@ const securityMeta = (): Plugin => ({
   name: 'security-meta',
   apply: 'build',
   transformIndexHtml: (html) =>
-    html.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />\n    <meta name="referrer" content="no-referrer" />`),
+    html
+      .replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n    <meta http-equiv="Content-Security-Policy" content="${CSP}" />\n    <meta name="referrer" content="no-referrer" />`)
+      .replace('</body>', `  ${CF_BEACON}\n  </body>`),
 })
 
 export default defineConfig({
