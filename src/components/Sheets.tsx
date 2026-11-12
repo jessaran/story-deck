@@ -6,7 +6,6 @@ import { DRAW_DECK_SIZE, PALETTE } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
 import { useStore } from '../state/store'
-import { Mascot } from './Mascot'
 import duck from '../assets/tip-fab.webp'
 import { HistCard } from './HistCard'
 
@@ -119,10 +118,7 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
         </div>
 
         <div className="mt-2.5 bg-slate px-4 py-4 text-surface">
-          <div className="flex items-center gap-2.5">
-            <Mascot size={24} tone="white" />
-            <div className="t-mono text-[8.5px] text-surface/80">Funciona sin conexión</div>
-          </div>
+          <div className="t-mono text-[8.5px] text-surface/80">Funciona sin conexión</div>
           <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este dispositivo: sin cuenta, sin servidor, sin cookies, sin seguimiento.</p>
         </div>
         {!persisted && (
