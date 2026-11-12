@@ -1,7 +1,8 @@
-import { Info } from 'lucide-react'
+import { Info, X } from 'lucide-react'
+import { Link } from 'react-router'
 
 /** Cabecera editorial: marca, título en mayúsculas y subtítulo en serif. */
-export function Header({ title, sub, color, onInfo, accent, logo }: { title: string; sub?: string; color: string; onInfo?: () => void; accent?: string; logo?: string }) {
+export function Header({ title, sub, color, onInfo, accent, logo, back }: { title: string; sub?: string; color: string; onInfo?: () => void; accent?: string; logo?: string; back?: boolean }) {
   return (
     <header className="relative z-20 shrink-0 border-b border-rule bg-surface px-[22px] pb-3.5" style={{ paddingTop: 'calc(var(--sat) + 14px)' }}>
       <div className="flex items-center justify-between">
@@ -14,6 +15,11 @@ export function Header({ title, sub, color, onInfo, accent, logo }: { title: str
               Story Deck<sup className="ml-0.5 text-[8px] font-bold text-blue">®</sup>
             </span>
           </div>
+        )}
+        {back && (
+          <Link to="/" aria-label="Volver al mazo" className="flex size-8 items-center justify-center border border-ink/20 hover:border-ink">
+            <X size={15} aria-hidden />
+          </Link>
         )}
         {onInfo && (
           <button type="button" onClick={onInfo} aria-label={`Cómo funciona ${title}`} className="flex size-8 items-center justify-center border border-ink/80 bg-surface transition-colors hover:bg-ink hover:text-surface">

@@ -6,7 +6,7 @@ export function History() {
   const { state } = useStore()
   return (
     <>
-      <Header title="Últimas" sub="Las cinco cartas más recientes." color="#17150F" />
+      <Header back title="Últimas" sub="Las cinco cartas más recientes." color="#17150F" />
       <main className="anim-stage-in min-h-0 flex-1 overflow-y-auto px-[22px] py-5" aria-label="Últimas tiradas">
         {state.hist.length ? (
           <ol className="flex flex-col gap-2.5">

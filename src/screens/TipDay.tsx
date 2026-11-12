@@ -37,7 +37,7 @@ export function TipDay() {
 
   return (
     <>
-      <Header title={TIP_MODE.title} sub={TIP_MODE.sub} color={TIP_COLOR} />
+      <Header back title={TIP_MODE.title} sub={TIP_MODE.sub} color={TIP_COLOR} />
       {view === 'coll' ? (
         <Collection onBack={() => setView('card')} />
       ) : (

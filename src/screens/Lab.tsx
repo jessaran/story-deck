@@ -1,18 +1,20 @@
-import { X } from 'lucide-react'
 import { animate, AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform, type MotionValue, type PanInfo } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { Link } from 'react-router'
+import logo from '../assets/logo-stack.webp'
 import { CardBack, type Face } from '../components/CardFaces'
 import { GestureHint } from '../components/GestureHint'
+import { AccountSheet } from '../components/Sheets'
+import { TipFab } from '../components/TipFab'
 import { breakCards, BREAK_COLOR, craft, CRAFT_ORDER, spark, SPARK_ORDER, type CraftKey } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES } from '../lib/modes'
 import { pickNoRepeat, seedPhrase } from '../lib/rules'
+import { useStore } from '../state/store'
 
 /**
- * Prototipo «mazo en la mano» (#/lab). Solo para probar la sensación:
- * no guarda nada en el historial ni en el contador.
- * shortcut: sin Tip Day ni Y SI…, añadir si la propuesta se adopta.
+ * Pantalla principal: el mazo en la mano. Se roba arrastrando hacia arriba y la carta
+ * ocupa toda la pantalla; se suelta lanzándola.
+ * shortcut: sin carta Y SI… en Spark; añadirla si se echa de menos.
  */
 const LAB_MODES = ['spark', 'craft', 'break'] as const
 const CW = 236
@@ -47,6 +49,8 @@ function Layer({ i, tilt, dx, dy, jump, style, color }: { i: number; tilt: numbe
 }
 
 export function Lab() {
+  const { state, logCard, announce } = useStore()
+  const [account, setAccount] = useState(false)
   const reduce = useReducedMotion()
   const root = useRef<HTMLDivElement>(null)
   const probe = useRef<HTMLDivElement>(null)
@@ -138,6 +142,7 @@ export function Lab() {
     setFace(f)
     setPhase('drawing')
     if (mode === 'spark' && !seedReady) setSparkRun((r) => [...r, f])
+    if (!f.seed) logCard({ label: f.label, text: f.text, color: f.color })
     const kick = (Math.random() < 0.5 ? -1 : 1) * (4 + Math.random() * 3)
     animate(dx, 0, go(SNAP))
     animate(dy, 0, go(SNAP))
@@ -152,6 +157,7 @@ export function Lab() {
     setLayerTilts(tilts())
     await wait(520)
     buzz(20)
+    announce(`${f.label}. ${f.text}`)
     setPhase('open')
     busy.current = false
   }
@@ -275,15 +281,21 @@ export function Lab() {
 
       {/* Barra mínima */}
       <div className="absolute inset-x-0 top-0 z-30 px-[22px]" style={{ paddingTop: 'calc(var(--sat) + 14px)' }}>
-        <div className="flex items-center justify-between">
-          <span className="font-display text-[13px] font-extrabold uppercase tracking-[-0.02em]">
-            Story Deck<sup className="ml-0.5 text-[8px] font-bold text-blue">®</sup>
-          </span>
-          <Link to="/" aria-label="Salir del prototipo" className="flex size-8 items-center justify-center border border-ink/20 hover:border-ink">
-            <X size={15} aria-hidden />
-          </Link>
+        <div className="flex items-start justify-between">
+          <img src={logo} alt="Story Deck" width={478} height={640} draggable={false} className="block h-[56px] w-auto" />
+          <button
+            type="button"
+            onClick={() => {
+              buzz(8)
+              setAccount(true)
+            }}
+            aria-label={`Cuenta de ${state.name || 'usuario'}: ${state.draws} cartas robadas`}
+            className="t-serif flex size-9 items-center justify-center rounded-full bg-ink text-[19px] text-surface"
+          >
+            {(state.name.trim()[0] ?? 's').toLowerCase()}
+          </button>
         </div>
-        <div role="tablist" aria-label="Mazo" className="mt-4 flex justify-center gap-6">
+        <div role="tablist" aria-label="Mazo" className="mt-3 flex justify-center gap-6">
           {LAB_MODES.map((key, i) => (
             <button
               key={key}
@@ -309,7 +321,7 @@ export function Lab() {
 
       {/* Spark: las cartas ya robadas, en miniatura, esperando la frase */}
       {mode === 'spark' && sparkRun.length > 0 && (
-        <div aria-hidden className="absolute inset-x-0 flex justify-center gap-3" style={{ top: Math.max(size.h * 0.13, 104) + 40 }}>
+        <div aria-hidden className="absolute inset-x-0 flex justify-center gap-3" style={{ top: size.sat + 150 }}>
           {SPARK_ORDER.map((key, i) => (
             <div key={key} className="relative" style={{ width: CW * 0.32, height: CH * 0.32, rotate: `${(i - 1) * 5}deg` }}>
               {sparkRun[i] ? (
@@ -424,6 +436,9 @@ export function Lab() {
           )}
         </AnimatePresence>
       </motion.div>
+      {/* Tip Day flota en el hueco blanco, por encima del mazo */}
+      {phase === 'deck' && <TipFab bottom={size.h - rest.y + 18} />}
+      <AccountSheet open={account} onClose={() => setAccount(false)} />
     </div>
   )
 }
