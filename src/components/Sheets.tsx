@@ -215,7 +215,7 @@ export function AboutSheet({ open, onClose }: { open: boolean; onClose: () => vo
         </div>
         <div className="mt-4 flex items-center gap-4">
           <img src={duck} alt="" aria-hidden draggable={false} width={240} height={217} className="block h-auto w-[96px] shrink-0" />
-          <p className="t-serif text-[17px] leading-[1.3]">Escribo guiones y dirijo. Juego con código y programo cosas que no tengo ni idea de cómo programar porque tengo TDAH.</p>
+          <p className="t-serif text-[17px] leading-[1.3]">¡Hola, soy Jess! Escribo guiones y dirijo. Pero también juego con código y programo cosas como esta porque tengo TDAH y una curiosidad infinita.</p>
         </div>
         <a href="https://jessaran.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-5 w-full">
           jessaran.com ↗
