@@ -4,7 +4,6 @@ import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from
 import { Link } from 'react-router'
 import { CardBack, type Face } from '../components/CardFaces'
 import { GestureHint } from '../components/GestureHint'
-import { Mascot } from '../components/Mascot'
 import { breakCards, BREAK_COLOR, craft, CRAFT_ORDER, spark, SPARK_ORDER, type CraftKey } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES } from '../lib/modes'
@@ -377,11 +376,11 @@ export function Lab() {
           </div>
         </motion.div>
 
-        {/* El patito de la esquina abre el globo con la info de la carta */}
+        {/* La ! de la esquina abre el globo con la info de la carta */}
         <AnimatePresence>
           {open && info && (
             <motion.button
-              key="duck"
+              key="info"
               type="button"
               aria-expanded={bubble}
               aria-label={bubble ? 'Cerrar info' : 'Ver info de la carta'}
@@ -399,7 +398,7 @@ export function Lab() {
               className="absolute flex size-12 items-center justify-center rounded-full border-[1.5px] border-ink bg-surface"
               style={{ top: 16, right: 16 }}
             >
-              <Mascot size={30} />
+              <span aria-hidden className="font-display text-[24px] font-extrabold leading-none">!</span>
             </motion.button>
           )}
           {open && bubble && info && (

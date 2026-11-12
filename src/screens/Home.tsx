@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import logo from '../assets/logo-stack.webp'
 import { Header } from '../components/Header'
 import { AccountSheet, TutorialSheet } from '../components/Sheets'
 import { Stage } from '../components/Stage'
@@ -17,7 +18,7 @@ export function Home() {
 
   return (
     <>
-      <Header title={state.name ? 'Hola, ' : 'Hola'} accent={state.name || undefined} sub="Tres tiradas para tres momentos de escritura." color="#17150F" />
+      <Header title={state.name ? 'Hola, ' : 'Hola'} accent={state.name || undefined} sub="Tres tiradas para tres momentos de escritura." color="#17150F" logo={logo} />
       <Stage label="Inicio">
         <div className="px-[22px] pt-3.5">
           <button
