@@ -23,7 +23,6 @@ const LAYERS = 5
 // Muelles con algo de rebote: el tacto «de papel» de la referencia.
 const SNAP = { type: 'spring', stiffness: 260, damping: 22 } as const
 const WOBBLE = { type: 'spring', stiffness: 190, damping: 10 } as const
-const FLIP = { type: 'spring', stiffness: 120, damping: 15 } as const
 
 type Phase = 'deck' | 'drawing' | 'open'
 type LabFace = Face & { seed?: Face[] }
@@ -81,6 +80,7 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   const [face, setFace] = useState<LabFace | null>(null)
   const [phase, setPhase] = useState<Phase>('deck')
   const [bubble, setBubble] = useState(false)
+  const [front, setFront] = useState(false)
   const [sparkRun, setSparkRun] = useState<Face[]>([])
   const [layerTilts, setLayerTilts] = useState(tilts)
   const [jump, setJump] = useState(0)
@@ -117,6 +117,21 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   const go = <T,>(o: T) => (reduce ? { duration: 0 } : o)
   const wait = (ms: number) => new Promise((r) => setTimeout(r, reduce ? 0 : ms))
 
+  const summary = (run: Face[]): LabFace => ({ label: 'Frase-semilla', color: '#FFFFFF', text: seedPhrase(run[0].text, run[1].text, run[2].text), seed: run })
+
+  /** Carta Y SI… opcional: se suma al resumen de Spark. */
+  function addYsi() {
+    if (!face?.seed || face.seed.length > 3) return
+    buzz(14)
+    const d = spark.YSI
+    const text = pickNoRepeat(d.items, prev.current.YSI)
+    prev.current.YSI = text
+    const c = { label: d.name, color: d.color, text }
+    logCard(c)
+    announce(`${c.label}. ${c.text}`)
+    setFace({ ...face, seed: [...face.seed, c] })
+  }
+
   function nextFace(): LabFace {
     if (mode === 'break') {
       const text = pickNoRepeat(breakCards, prev.current.break)
@@ -129,7 +144,7 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
       prev.current[cat] = text
       return { label: d.name.toUpperCase(), color: d.color, text }
     }
-    if (seedReady) return { label: 'Frase-semilla', color: '#FFFFFF', text: seedPhrase(sparkRun[0].text, sparkRun[1].text, sparkRun[2].text), seed: sparkRun }
+    if (seedReady) return summary(sparkRun)
     const k = SPARK_ORDER[sparkRun.length]
     const d = spark[k]
     const text = pickNoRepeat(d.items, prev.current[k])
@@ -137,11 +152,11 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
     return { label: k === 'QUIEN' ? 'PROTAGONISTA' : d.name, color: d.color, text }
   }
 
-  async function draw() {
-    if (busy.current || phase !== 'deck') return
+  async function draw(auto?: LabFace) {
+    if (busy.current || (!auto && phase !== 'deck')) return
     busy.current = true
     buzz(16)
-    const f = nextFace()
+    const f = auto ?? nextFace()
     setFace(f)
     setPhase('drawing')
     if (mode === 'spark' && !seedReady) setSparkRun((r) => [...r, f])
@@ -154,11 +169,17 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
     animate(w, full.w, go(SNAP))
     animate(h, full.h, go(SNAP))
     animate(scale, 1, go(SNAP))
-    animate(rotateY, 180, go(FLIP))
     // Un pequeño giro en el aire y se asienta con rebote.
     animate(rotate, kick, go({ duration: 0.22, ease: 'easeOut' })).then(() => animate(rotate, 0, go(WOBBLE)))
     setLayerTilts(tilts())
-    await wait(520)
+    // Giro en dos mitades con una sola cara: el dorso gira hasta el canto, se cambia por la cara
+    // y esta termina el giro. Sin backface-visibility, que es lo que parpadeaba (sobre todo en Safari).
+    animate(rotateY, 90, go({ duration: 0.2, ease: 'easeIn' }))
+    await wait(200)
+    setFront(true)
+    rotateY.jump(-90)
+    animate(rotateY, 0, go({ duration: 0.34, ease: [0.2, 0.9, 0.3, 1] }))
+    await wait(320)
     buzz(20)
     announce(`${f.label}. ${f.text}`)
     setPhase('open')
@@ -179,9 +200,12 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
     // Temporizador y no la promesa de la animación: si la pestaña se oculta, la animación se congela.
     await wait(380)
     if (face?.seed) setSparkRun([])
+    // Tras la tercera carta de Spark, el resumen se abre solo.
+    const thenSummary = mode === 'spark' && !face?.seed && sparkRun.length === 3
     // La siguiente carta entra desde abajo y se coloca encima del mazo.
     topTilt.current = (Math.random() - 0.5) * 3
     rotateY.jump(0)
+    setFront(false)
     scale.jump(1)
     px.jump(rest.x)
     py.jump(rest.y)
@@ -198,6 +222,10 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
     // No esperamos a que el muelle se asiente: se puede robar mientras aún rebota.
     await wait(260)
     busy.current = false
+    if (thenSummary) {
+      await wait(200)
+      draw(summary(sparkRun))
+    }
   }
 
   async function switchMode(dir: 1 | -1) {
@@ -270,7 +298,7 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   // Globo de info: solo texto que ya existe en la app (pasos de cada modo y las cartas de la tirada).
   const info = (() => {
     if (!face) return null
-    const [t, d] = mode === 'spark' ? MODES.spark.steps[3] : mode === 'break' ? MODES.break.steps[2] : cat === 'OFICIO' ? MODES.craft.steps[4] : MODES.craft.steps[3]
+    const [t, d] = face.seed ? MODES.spark.steps[4] : mode === 'spark' ? MODES.spark.steps[3] : mode === 'break' ? MODES.break.steps[2] : cat === 'OFICIO' ? MODES.craft.steps[4] : MODES.craft.steps[3]
     return { title: t, lines: [d] }
   })()
 
@@ -357,45 +385,68 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
         className="absolute left-0 top-0 outline-offset-4"
         style={{ x, y, width: w, height: h, rotate, scale, opacity, zIndex: phase === 'deck' ? 20 : 40, perspective: 1600, touchAction: 'none', cursor: 'grab' }}
       >
-        <motion.div className="relative size-full" style={{ rotateY, transformStyle: 'preserve-3d' }}>
-          {/* -webkit- hace falta en Safari: sin él se ven las dos caras a la vez durante el giro */}
-          <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-            <CardBack color={m.color} title={m.title} label={backLabel} titleSize={34 * s} r={22} />
-          </div>
-          <div className="absolute inset-0" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-            {face && (
-              <div
-                className="card-face flex flex-col text-ink"
-                style={{ background: face.color, padding: 28, ['--r' as string]: '22px', boxShadow: '0 24px 60px rgba(23,21,15,.22)', border: face.seed ? '1.5px solid #17150F' : undefined } as React.CSSProperties}
-                aria-hidden
-              >
-                <div className="t-mono text-[10px]" style={{ opacity: 'var(--dim)' }}>
-                  {face.label}
-                </div>
-                {/* El texto aparece cuando la carta ya está abierta: mientras crece, recolocarlo línea a línea parpadea */}
-                <motion.div className="mt-auto flex flex-col" initial={false} animate={{ opacity: open ? 1 : 0 }} transition={{ duration: open ? 0.25 : 0 }}>
-                  {face.seed && (
-                    <ul className="mb-5 flex flex-col gap-2">
-                      {face.seed.map((c) => (
-                        <li key={c.label} className="px-3 py-2.5" style={{ background: c.color, borderRadius: 8 }}>
-                          <div className="t-mono text-[8px]" style={{ opacity: 'var(--dim)' }}>
-                            {c.label}
-                          </div>
-                          <p className="t-serif mt-1 text-[15px] leading-[1.2]">{c.text}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  <p className="t-serif" style={{ fontSize: (face.seed ? 24 : fullSize(face.text.length)) * k, lineHeight: 1.15 }}>
-                    {face.text}
-                  </p>
+        {/* Una sola cara visible: draw() la cambia justo cuando la carta está de canto */}
+        <motion.div className="relative size-full" style={{ rotateY }}>
+          {front && face ? (
+            <div
+              className="card-face flex flex-col text-ink"
+              style={{ background: face.color, padding: face.seed ? 22 : 28, ['--r' as string]: '22px', boxShadow: '0 24px 60px rgba(23,21,15,.22)', border: face.seed ? '1.5px solid #17150F' : undefined } as React.CSSProperties}
+            >
+              <div className="t-mono text-[10px]" style={{ opacity: 'var(--dim)' }}>
+                {face.label}
+              </div>
+              {/* El texto aparece cuando la carta ya está abierta: mientras crece, recolocarlo línea a línea parpadea */}
+              <motion.div className="mt-auto flex flex-col" initial={false} animate={{ opacity: open ? 1 : 0 }} transition={{ duration: open ? 0.25 : 0 }}>
+                {face.seed && (
+                  <ul className="mb-4 flex flex-col gap-1.5">
+                    {face.seed.map((c, i) => (
+                      <li key={c.label} className={`px-3 py-2 ${i === 3 ? 'anim-bounce-in' : ''}`} style={{ background: c.color, borderRadius: 8 }}>
+                        <div className="t-mono text-[8px]" style={{ opacity: 'var(--dim)' }}>
+                          {c.label}
+                        </div>
+                        <p className="t-serif mt-0.5 text-[14px] leading-[1.2]">{c.text}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <p className="t-serif" style={{ fontSize: (face.seed ? 22 : fullSize(face.text.length)) * k, lineHeight: 1.15 }}>
+                  {face.text}
+                </p>
+                {face.seed ? (
+                  <div className="mt-4 flex gap-2" onPointerDown={(e) => e.stopPropagation()}>
+                    {face.seed.length === 3 && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addYsi()
+                        }}
+                        className="btn btn-ghost flex-1 px-2"
+                      >
+                        + Carta Y SI…
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        dismiss()
+                      }}
+                      className="btn btn-primary flex-1 px-2"
+                    >
+                      Otra tirada
+                    </button>
+                  </div>
+                ) : (
                   <div className="t-mono mt-6 text-[8.5px]" style={{ opacity: 0.45 }}>
                     Lánzala para soltarla
                   </div>
-                </motion.div>
-              </div>
-            )}
-          </div>
+                )}
+              </motion.div>
+            </div>
+          ) : (
+            <CardBack color={m.color} title={m.title} label={backLabel} titleSize={34 * s} r={22} />
+          )}
         </motion.div>
 
         {/* La ! de la esquina abre el globo con la info de la carta */}
