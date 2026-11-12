@@ -153,7 +153,7 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
         <div className="mt-5">
           {confirm ? (
             <div className="border border-ink p-4" role="alertdialog" aria-label="Confirmar borrado">
-              <p className="text-[13.5px] font-medium leading-snug">¿Borrar tus últimas tiradas? El contador de cartas robadas y tu colección de Tip Day se mantienen.</p>
+              <p className="text-[13.5px] font-medium leading-snug">¿Borrar tus últimas tiradas? El contador de cartas robadas y tu colección de Tip del día se mantienen.</p>
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"

@@ -16,6 +16,8 @@ const byId = new Map(tips.map((t) => [t.id, t]))
 const TOTAL = tips.length
 const SWIPE = 70
 const BACK_EASE = [0.2, 1.3, 0.4, 1] as const
+// Lienzo más estrecho que el de 402: al escalarlo al ancho de la pantalla, el mazo sale grande.
+const TIP_CANVAS = { w: 300, h: 500, max: 1.6 }
 
 export function TipDay() {
   const { state, matchTip, announce } = useStore()
@@ -41,19 +43,17 @@ export function TipDay() {
       {view === 'coll' ? (
         <Collection onBack={() => setView('card')} />
       ) : (
-        <Stage label="Tip Day">
-          {complete && !matched && phase === 'deck' && (
-            <p className="t-serif absolute left-0 right-0 top-6 px-10 text-center text-[17px] leading-snug text-muted">Has reunido las 40 cartas de Tip Day. Puedes seguir revisitándolas.</p>
-          )}
+        <Stage label="Tip del día" canvas={TIP_CANVAS}>
+
           {phase === 'deck' ? (
             <>
-              <div className="t-mono absolute left-0 right-0 text-center text-[8.5px] text-muted2" style={{ top: 112 }}>
-                Carta del día
+              <div className="t-mono absolute left-0 right-0 px-6 text-center text-[8.5px] text-muted2" style={{ top: 0 }}>
+                {complete && !matched ? 'Tienes las 40. Puedes seguir revisitándolas.' : 'Carta del día'}
               </div>
-              <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 160 }}>
-                <Deck mode="throw" color={TIP_COLOR} title="Tip Day" label="1 carta · 1 match" onLaunch={take} ariaLabel="Mazo de Tip Day, roba la carta del día" />
+              <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 52 }}>
+                <Deck mode="throw" color={TIP_COLOR} title="Tip del día" label="1 carta · 1 match" onLaunch={take} ariaLabel="Mazo de Tip del día, roba la carta del día" />
               </div>
-              <div className="absolute left-0 right-0 flex flex-col items-center gap-4" style={{ top: 508 }}>
+              <div className="absolute left-0 right-0 flex flex-col items-center gap-4" style={{ top: 410 }}>
                 <GestureHint color={TIP_COLOR} />
                 <button type="button" onClick={() => setView('coll')} className="t-mono text-[9px] text-muted underline decoration-ink/20 underline-offset-4 hover:text-ink">
                   {count}/{TOTAL} en tu colección
@@ -139,10 +139,10 @@ function SwipeCard({ tip, matched, onDiscard, onMatch, count, onCollection }: { 
 
   return (
     <>
-      <div className="t-mono absolute left-0 right-0 text-center text-[8.5px] text-muted2" style={{ top: 90 }}>
+      <div className="t-mono absolute left-0 right-0 text-center text-[8.5px] text-muted2" style={{ top: 10 }}>
         Tu carta de hoy
       </div>
-      <div className="absolute left-1/2" style={{ top: 120, width: 264, height: 360, marginLeft: -132 }}>
+      <div className="absolute left-1/2" style={{ top: 32, width: 264, height: 360, marginLeft: -132 }}>
         <motion.div
           className={matched ? '' : 'anim-bounce-in'}
           style={{ width: '100%', height: '100%', x, rotate, touchAction: 'none', perspective: 1100, cursor: done ? 'default' : 'grab', transformOrigin: '50% 82%' }}
@@ -150,9 +150,9 @@ function SwipeCard({ tip, matched, onDiscard, onMatch, count, onCollection }: { 
           onPanEnd={onPanEnd}
         >
           <motion.div className="relative size-full" style={{ rotateY, transformStyle: 'preserve-3d' }}>
-            <div className="card-face flex flex-col p-6 text-ink" style={{ background: TIP_COLOR, ['--r' as string]: '20px' }} role={done ? undefined : 'img'} aria-label={done ? undefined : `Tip Day. ${tip.front}`} aria-hidden={done || undefined}>
+            <div className="card-face flex flex-col p-6 text-ink" style={{ background: TIP_COLOR, ['--r' as string]: '20px' }} role={done ? undefined : 'img'} aria-label={done ? undefined : `Tip del día. ${tip.front}`} aria-hidden={done || undefined}>
               <div className="t-mono text-[8.5px]" style={{ opacity: 'var(--dim)' }} aria-hidden>
-                Tip Day
+                Tip del día
               </div>
               <p className="t-serif mt-auto leading-[1.16]" style={{ fontSize: frontSize(tip.front) }} aria-hidden>
                 {tip.front}
@@ -179,7 +179,7 @@ function SwipeCard({ tip, matched, onDiscard, onMatch, count, onCollection }: { 
         </motion.div>
       </div>
 
-      <div className="absolute left-0 right-0 flex flex-col items-center gap-3 px-[22px]" style={{ top: 506 }}>
+      <div className="absolute left-0 right-0 flex flex-col items-center gap-3 px-4" style={{ top: 406 }}>
         {done ? (
           <div className="anim-stage-in flex flex-col items-center gap-3">
             <p className="t-serif text-[17px] text-muted">Ya hiciste match hoy. Vuelve mañana.</p>
@@ -218,7 +218,7 @@ function Collection({ onBack }: { onBack: () => void }) {
       {list.length >= TOTAL && (
         <div className="mt-5 bg-blue px-5 py-5 text-surface">
           <div className="t-display text-[26px]">40/40</div>
-          <p className="t-serif mt-2 text-[19px] leading-snug">Has reunido las 40 cartas de Tip Day.</p>
+          <p className="t-serif mt-2 text-[19px] leading-snug">Has reunido las 40 cartas de Tip del día.</p>
         </div>
       )}
       {list.length ? (
@@ -227,7 +227,7 @@ function Collection({ onBack }: { onBack: () => void }) {
             <li key={t.id} className="overflow-hidden" style={{ borderRadius: 4 }}>
               <div className="px-5 pb-4 pt-3.5" style={{ background: TIP_COLOR }}>
                 <div className="t-mono text-[8px]" style={{ opacity: 'var(--dim)' }}>
-                  Tip Day
+                  Tip del día
                 </div>
                 <p className="t-serif mt-2 text-[20px] leading-[1.2]">{t.front}</p>
               </div>

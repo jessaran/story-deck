@@ -43,4 +43,4 @@ export const MODES = {
   },
 } as const satisfies Record<ModeKey, { title: string; color: string; mech: string; sub: string; steps: readonly (readonly [string, string])[] }>
 
-export const TIP_MODE = { title: 'Tip Day', color: TIP_COLOR, sub: 'Una carta de oficio al día. Un solo match.' }
+export const TIP_MODE = { title: 'Tip del día', color: TIP_COLOR, sub: 'Una carta de oficio al día. Un solo match.' }

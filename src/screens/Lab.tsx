@@ -270,7 +270,6 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   // Globo de info: solo texto que ya existe en la app (pasos de cada modo y las cartas de la tirada).
   const info = (() => {
     if (!face) return null
-    if (face.seed) return { title: 'De dónde sale', lines: face.seed.map((c) => `${c.label} · ${c.text}`) }
     const [t, d] = mode === 'spark' ? MODES.spark.steps[3] : mode === 'break' ? MODES.break.steps[2] : cat === 'OFICIO' ? MODES.craft.steps[4] : MODES.craft.steps[3]
     return { title: t, lines: [d] }
   })()
@@ -359,10 +358,11 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
         style={{ x, y, width: w, height: h, rotate, scale, opacity, zIndex: phase === 'deck' ? 20 : 40, perspective: 1600, touchAction: 'none', cursor: 'grab' }}
       >
         <motion.div className="relative size-full" style={{ rotateY, transformStyle: 'preserve-3d' }}>
-          <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
+          {/* -webkit- hace falta en Safari: sin él se ven las dos caras a la vez durante el giro */}
+          <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
             <CardBack color={m.color} title={m.title} label={backLabel} titleSize={34 * s} r={22} />
           </div>
-          <div className="absolute inset-0" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}>
+          <div className="absolute inset-0" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
             {face && (
               <div
                 className="card-face flex flex-col text-ink"
@@ -372,12 +372,27 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
                 <div className="t-mono text-[10px]" style={{ opacity: 'var(--dim)' }}>
                   {face.label}
                 </div>
-                <p className="t-serif mt-auto" style={{ fontSize: fullSize(face.text.length) * k, lineHeight: 1.15 }}>
-                  {face.text}
-                </p>
-                <div className="t-mono mt-6 text-[8.5px]" style={{ opacity: 0.45 }}>
-                  Lánzala para soltarla
-                </div>
+                {/* El texto aparece cuando la carta ya está abierta: mientras crece, recolocarlo línea a línea parpadea */}
+                <motion.div className="mt-auto flex flex-col" initial={false} animate={{ opacity: open ? 1 : 0 }} transition={{ duration: open ? 0.25 : 0 }}>
+                  {face.seed && (
+                    <ul className="mb-5 flex flex-col gap-2">
+                      {face.seed.map((c) => (
+                        <li key={c.label} className="px-3 py-2.5" style={{ background: c.color, borderRadius: 8 }}>
+                          <div className="t-mono text-[8px]" style={{ opacity: 'var(--dim)' }}>
+                            {c.label}
+                          </div>
+                          <p className="t-serif mt-1 text-[15px] leading-[1.2]">{c.text}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <p className="t-serif" style={{ fontSize: (face.seed ? 24 : fullSize(face.text.length)) * k, lineHeight: 1.15 }}>
+                    {face.text}
+                  </p>
+                  <div className="t-mono mt-6 text-[8.5px]" style={{ opacity: 0.45 }}>
+                    Lánzala para soltarla
+                  </div>
+                </motion.div>
               </div>
             )}
           </div>

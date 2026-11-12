@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router'
 import { TIP_COLOR } from '../lib/content'
 import { buzz } from '../lib/haptics'
 
-/** Botón flotante de Tip Day: una estrella sobre círculo negro, sin texto, flotando. */
+/** Botón flotante de Tip del día: una estrella sobre círculo negro, sin texto, flotando. */
 export function TipFab() {
   const navigate = useNavigate()
   return (
     <button
       type="button"
-      aria-label="Abrir Tip Day"
+      aria-label="Abrir Tip del día"
       onClick={() => {
         buzz(10)
         navigate('/tip')

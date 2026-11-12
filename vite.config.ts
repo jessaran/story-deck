@@ -31,7 +31,7 @@ export default defineConfig({
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
           { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
-        shortcuts: [{ name: 'Tip Day', url: `${BASE}#/tip`, icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] }],
+        shortcuts: [{ name: 'Tip del día', url: `${BASE}#/tip`, icons: [{ src: 'icons/icon-192.png', sizes: '192x192' }] }],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,woff,woff2}'],

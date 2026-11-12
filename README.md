@@ -7,7 +7,7 @@ Un mazo de cartas para desatascar la escritura. Web app instalable (PWA): sin cu
 - **Spark**: tres cartas (QUIÉN → GRIETA → FRICCIÓN) que forman una frase-semilla, más una Y SI… opcional.
 - **Craft**: una carta de la categoría que elijas (Personaje, Conflicto, Mundo, Relación, Oficio).
 - **Break**: una carta, ya.
-- **Tip Day** (botón de la llama): una carta de oficio al día. Swipe izquierda descarta, derecha hace match. Un match por día.
+- **Tip del día** (estrella flotante del inicio): una carta de oficio al día. Swipe izquierda descarta, derecha hace match. Un match por día.
 
 Todo el contenido está en [`src/content.json`](src/content.json) (69 cartas de tirada + 40 tips). Todo el estado se guarda en el navegador (`localStorage`, clave `storydeck.v3`).
 
