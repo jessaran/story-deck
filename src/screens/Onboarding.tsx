@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import duck from '../assets/duck-peace.webp'
 import { LogoSplash } from '../components/LogoSplash'
 import { InstallSheet } from '../components/Sheets'
@@ -14,6 +15,7 @@ function isIosSafariNotInstalled() {
 
 export function Onboarding() {
   const { finishOnboarding } = useStore()
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [install, setInstall] = useState(false)
   const [step, setStep] = useState<'logo' | 'name'>('logo')
@@ -31,6 +33,8 @@ export function Onboarding() {
         if (!ready) return
         buzz(14)
         finishOnboarding(name)
+        // Siempre al inicio, aunque la app se abriera en otra ruta (p. ej. el atajo de Tip Day).
+        navigate('/', { replace: true })
       }}
     >
       <div className="flex flex-1 flex-col items-center justify-center text-center">
@@ -57,7 +61,7 @@ export function Onboarding() {
           enterKeyHint="go"
           className="mt-3 w-full border-b-2 border-ink bg-transparent pb-2 text-left font-sans text-[22px] font-bold outline-none placeholder:text-muted3 focus-visible:border-blue focus-visible:outline-none"
         />
-        <p className="t-serif mt-6 self-start text-left text-[15px] text-muted2">Tip Day te espera cada día en el botón flotante del patito.</p>
+        <p className="t-serif mt-6 self-start text-left text-[15px] text-muted2">Tip Day te espera cada día en la estrella flotante del inicio.</p>
         {showInstall && (
           <button type="button" onClick={() => setInstall(true)} className="t-ui mt-3 self-start border border-ink/30 px-3 py-2 text-[9.5px] text-muted">
             Instálala en tu pantalla de inicio ↗
