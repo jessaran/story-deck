@@ -3,7 +3,6 @@ import { TipFab } from './components/TipFab'
 import { UpdatePrompt } from './components/UpdatePrompt'
 import { History } from './screens/History'
 import { Home } from './screens/Home'
-import { IntroLab } from './screens/IntroLab'
 import { Lab } from './screens/Lab'
 import { Onboarding } from './screens/Onboarding'
 import { TipDay } from './screens/TipDay'
@@ -24,7 +23,6 @@ function Shell() {
           <Route path="/craft" element={<Lab start="craft" />} />
           <Route path="/break" element={<Lab start="break" />} />
           <Route path="/tip" element={<TipDay />} />
-          <Route path="/intro" element={<IntroLab />} />
           <Route path="/ultimas" element={<History />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
