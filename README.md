@@ -23,6 +23,7 @@ Tras la primera visita funciona sin conexión. Cuando se publica una versión nu
 
 - Sin cuentas, sin servidor propio, sin cookies. Tipografías, imágenes y cartas van dentro de la app.
 - Estadísticas de visitas con [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/): anónimas, sin cookies y sin identificar a nadie. Es lo único que sale de la app, y solo en la versión publicada (no en `npm run dev`). Los bloqueadores de anuncios pueden frenarlo.
+  - El sitio de Cloudflare es `jessaran.github.io`, que comparten todos los proyectos de GitHub Pages de la cuenta. El token (en `vite.config.ts`) es **solo para Story Deck**: no lo reutilices en otro proyecto. Si algún día otro proyecto de `jessaran.github.io` usa el mismo token, filtra en el panel por ruta que empieza por `/story-deck/`.
 - Lo único que se guarda es tu nombre, el contador, las 5 últimas tiradas y la colección de Tip del día, en el `localStorage` de tu navegador (clave `storydeck.v3`). Se valida al leerlo.
 - Desde la cuenta se puede borrar el historial o **todos los datos** del dispositivo.
 - En producción, una política de seguridad de contenido (CSP) solo permite recursos del propio sitio y de Cloudflare Web Analytics, y `referrer` está en `no-referrer`. El enlace a jessaran.com se abre con `noopener noreferrer`.
