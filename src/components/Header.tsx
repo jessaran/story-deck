@@ -5,6 +5,8 @@ import { Link } from 'react-router'
 export function Header({ title, sub, color, onInfo, accent, logo, back, aside }: { title: string; sub?: string; color: string; onInfo?: () => void; accent?: string; logo?: string; back?: boolean; aside?: React.ReactNode }) {
   return (
     <header className="relative z-20 shrink-0 border-b border-rule bg-surface px-[22px] pb-3.5" style={{ paddingTop: 'calc(var(--sat) + 14px)' }}>
+      {/* En escritorio el contenido se alinea con la columna central */}
+      <div className="mx-auto max-w-[1080px]">
       <div className="flex items-center justify-between">
         {logo ? (
           <img src={logo} alt="Story Deck" width={478} height={640} draggable={false} className="block h-[76px] w-auto" />
@@ -34,6 +36,7 @@ export function Header({ title, sub, color, onInfo, accent, logo, back, aside }:
           {accent && <span className="text-blue">{accent}</span>}
         </h1>
         {sub && <p className="t-serif line-clamp-3 max-w-[190px] text-right text-[12.5px] leading-[1.2] text-muted">{sub}</p>}
+      </div>
       </div>
     </header>
   )

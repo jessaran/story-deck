@@ -7,6 +7,7 @@ import { AboutSheet, AccountSheet, TutorialSheet } from '../components/Sheets'
 import { Stage } from '../components/Stage'
 import { buzz } from '../lib/haptics'
 import { MODES, type ModeKey } from '../lib/modes'
+import { useWide } from '../lib/useWide'
 import { useStore } from '../state/store'
 
 export function Home() {
@@ -16,10 +17,44 @@ export function Home() {
   const [account, setAccount] = useState(false)
   const [about, setAbout] = useState(false)
   const keys: ModeKey[] = ['spark', 'craft', 'break']
+  const wide = useWide()
+  const open = (k: ModeKey) => {
+    buzz(10)
+    navigate(`/${k}`)
+  }
+  const howTo = (k: ModeKey) => {
+    buzz(8)
+    setTut(k)
+  }
+
+  const accountRow = (
+    <button
+      type="button"
+      onClick={() => {
+        buzz(8)
+        setAccount(true)
+      }}
+      className="group flex w-full items-center gap-3 border-y border-rule py-3 text-left"
+      aria-label={`Cuenta de ${state.name || 'usuario'}: ${state.draws} cartas robadas`}
+    >
+      <span aria-hidden className="t-serif flex size-10 shrink-0 items-center justify-center rounded-full bg-ink text-[21px] text-surface">
+        {(state.name.trim()[0] ?? 'l').toLowerCase()}
+      </span>
+      <span className="flex-1">
+        <span className="block text-[14px] font-bold leading-none">{state.name || 'Tu cuenta'}</span>
+        <span className="t-mono mt-1.5 block text-[8.5px] tracking-[0.14em] text-muted2">{state.draws} cartas robadas</span>
+      </span>
+      <ArrowRight aria-hidden size={17} className="text-muted2 transition-transform group-hover:translate-x-0.5 group-hover:text-ink" />
+    </button>
+  )
 
   return (
     <>
-      <Header title={state.name ? 'Hola, ' : 'Hola'} accent={state.name || undefined} sub="Tres tiradas para tres momentos de escritura." color="#17150F"
+      <Header
+        title={state.name ? 'Hola, ' : 'Hola'}
+        accent={state.name || undefined}
+        sub="Tres tiradas para tres momentos de escritura."
+        color="#17150F"
         logo={logo}
         aside={
           <button type="button" onClick={() => setAbout(true)} className="t-ui text-[10px] text-muted2 transition-colors hover:text-ink">
@@ -27,80 +62,109 @@ export function Home() {
           </button>
         }
       />
-      <Stage label="Inicio">
-        <div className="px-[22px] pt-3.5">
-          <button
-            type="button"
-            onClick={() => {
-              buzz(8)
-              setAccount(true)
-            }}
-            className="group flex w-full items-center gap-3 border-y border-rule py-3 text-left"
-            aria-label={`Cuenta de ${state.name || 'usuario'}: ${state.draws} cartas robadas`}
-          >
-            <span aria-hidden className="t-serif flex size-10 shrink-0 items-center justify-center rounded-full bg-ink text-[21px] text-surface">
-              {(state.name.trim()[0] ?? 'l').toLowerCase()}
-            </span>
-            <span className="flex-1">
-              <span className="block text-[14px] font-bold leading-none">{state.name || 'Tu cuenta'}</span>
-              <span className="t-mono mt-1.5 block text-[8.5px] tracking-[0.14em] text-muted2">{state.draws} cartas robadas</span>
-            </span>
-            <ArrowRight aria-hidden size={17} className="text-muted2 transition-transform group-hover:translate-x-0.5 group-hover:text-ink" />
-          </button>
-
-          <h2 className="t-label mb-3 mt-6">Elige una tirada</h2>
-          <div className="flex flex-col">
-            {keys.map((k, i) => {
-              const m = MODES[k]
-              const last = i === keys.length - 1
-              return (
-                <div
-                  key={k}
-                  className="relative cursor-pointer transition-transform duration-200 hover:-translate-y-1"
-                  style={{ background: m.color, marginTop: i ? -26 : 0, zIndex: i + 1, padding: `18px 18px ${last ? 22 : 44}px`, borderRadius: 6, boxShadow: '0 -6px 18px rgba(23,21,15,.10), inset 0 0 0 1px rgba(255,255,255,.5)' }}
-                  onClick={() => {
-                    buzz(10)
-                    navigate(`/${k}`)
-                  }}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="t-mono text-[8.5px] tracking-[0.16em]" style={{ opacity: 'var(--dim)' }}>
-                        {String(i + 1).padStart(2, '0')} — {m.mech}
-                      </div>
-                      <h3 className="t-display mt-2 text-[30px]">
-                        <a
-                          href={`#/${k}`}
-                          onClick={(e) => e.preventDefault()}
-                          className="outline-offset-4 after:absolute after:inset-0 after:content-['']"
-                          aria-label={`Abrir ${m.title}`}
-                        >
-                          {m.title}
-                        </a>
-                      </h3>
-                    </div>
-                    <span aria-hidden className="flex size-[34px] shrink-0 items-center justify-center bg-ink text-surface">
-                      <ArrowUpRight size={17} strokeWidth={2.2} />
-                    </span>
-                  </div>
-                  <p className="t-serif mt-2 max-w-[290px] text-[15px] leading-[1.25]">{m.sub}</p>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      buzz(8)
-                      setTut(k)
+      {wide ? (
+        <main aria-label="Inicio" className="anim-stage-in min-h-0 flex-1 overflow-y-auto px-10 pb-12 pt-6">
+          <div className="mx-auto w-full max-w-[1080px]">
+            <div className="max-w-[420px]">{accountRow}</div>
+            <h2 className="t-label mb-6 mt-8">Elige una tirada</h2>
+            {/* Las tres tiradas como cartas sobre la mesa: algo torcidas, se enderezan al pasar por encima */}
+            <div className="grid grid-cols-3 gap-10">
+              {keys.map((k, i) => {
+                const m = MODES[k]
+                return (
+                  <div
+                    key={k}
+                    onClick={() => open(k)}
+                    className="relative flex aspect-[236/334] max-h-[calc(100dvh-330px)] min-h-[300px] cursor-pointer flex-col justify-self-center p-6 transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,1.6,.4,1)] hover:-translate-y-2 hover:rotate-0 hover:scale-[1.03]"
+                    style={{
+                      background: m.color,
+                      rotate: `${[-2.5, 1.5, -1][i]}deg`,
+                      borderRadius: 18,
+                      boxShadow: '0 14px 34px rgba(23,21,15,.14), inset 0 0 0 2px #fff',
                     }}
-                    className="t-ui relative z-10 mt-3 inline-flex h-[30px] items-center border border-ink/70 px-3 text-[9.5px] transition-colors hover:bg-ink hover:text-surface"
                   >
-                    Cómo funciona
-                  </button>
-                </div>
-              )
-            })}
+                    <div className="t-mono text-[9px] tracking-[0.16em]" style={{ opacity: 'var(--dim)' }}>
+                      {String(i + 1).padStart(2, '0')} — {m.mech}
+                    </div>
+                    <h3 className="t-display mt-3 text-[44px]">
+                      <a href={`#/${k}`} onClick={(e) => e.preventDefault()} className="outline-offset-4 after:absolute after:inset-0 after:content-['']" aria-label={`Abrir ${m.title}`}>
+                        {m.title}
+                      </a>
+                    </h3>
+                    <p className="t-serif mt-auto text-[18px] leading-[1.25]">{m.sub}</p>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        howTo(k)
+                      }}
+                      className="t-ui relative z-10 mt-4 inline-flex h-[32px] items-center self-start border border-ink/70 px-3 text-[10px] transition-colors hover:bg-ink hover:text-surface"
+                    >
+                      Cómo funciona
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
-      </Stage>
+        </main>
+      ) : (
+        <Stage label="Inicio">
+          <div className="px-[22px] pt-3.5">
+            {accountRow}
+
+            <h2 className="t-label mb-3 mt-6">Elige una tirada</h2>
+            <div className="flex flex-col">
+              {keys.map((k, i) => {
+                const m = MODES[k]
+                const last = i === keys.length - 1
+                return (
+                  <div
+                    key={k}
+                    className="relative cursor-pointer transition-transform duration-200 hover:-translate-y-1"
+                    style={{
+                      background: m.color,
+                      marginTop: i ? -26 : 0,
+                      zIndex: i + 1,
+                      padding: `18px 18px ${last ? 22 : 44}px`,
+                      borderRadius: 6,
+                      boxShadow: '0 -6px 18px rgba(23,21,15,.10), inset 0 0 0 1px rgba(255,255,255,.5)',
+                    }}
+                    onClick={() => open(k)}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <div className="t-mono text-[8.5px] tracking-[0.16em]" style={{ opacity: 'var(--dim)' }}>
+                          {String(i + 1).padStart(2, '0')} — {m.mech}
+                        </div>
+                        <h3 className="t-display mt-2 text-[30px]">
+                          <a href={`#/${k}`} onClick={(e) => e.preventDefault()} className="outline-offset-4 after:absolute after:inset-0 after:content-['']" aria-label={`Abrir ${m.title}`}>
+                            {m.title}
+                          </a>
+                        </h3>
+                      </div>
+                      <span aria-hidden className="flex size-[34px] shrink-0 items-center justify-center bg-ink text-surface">
+                        <ArrowUpRight size={17} strokeWidth={2.2} />
+                      </span>
+                    </div>
+                    <p className="t-serif mt-2 max-w-[290px] text-[15px] leading-[1.25]">{m.sub}</p>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        howTo(k)
+                      }}
+                      className="t-ui relative z-10 mt-3 inline-flex h-[30px] items-center border border-ink/70 px-3 text-[9.5px] transition-colors hover:bg-ink hover:text-surface"
+                    >
+                      Cómo funciona
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </Stage>
+      )}
       <TutorialSheet mode={tut} onClose={() => setTut(null)} />
       <AccountSheet open={account} onClose={() => setAccount(false)} />
       <AboutSheet open={about} onClose={() => setAbout(false)} />

@@ -58,6 +58,7 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
     const el = root.current
     if (!el) return
     const measure = () => setSize({ w: el.clientWidth, h: el.clientHeight, sat: probe.current?.offsetTop ?? 0, sab: probe.current?.offsetHeight ?? 0 })
+    measure()
     const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
@@ -68,7 +69,10 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   const W = CW * s
   const H = CH * s
   const rest = { x: (size.w - W) / 2, y: size.h * 0.6, w: W, h: H }
-  const full = { x: 10, y: size.sat + 10, w: size.w - 20, h: size.h - size.sat - size.sab - 20 }
+  // En móvil la carta ocupa la pantalla; en pantalla ancha, una carta grande centrada con su proporción.
+  const fullH = size.h - size.sat - size.sab - (size.w > size.h ? 48 : 20)
+  const fullW = size.w > size.h ? Math.min(size.w - 40, (fullH * CW) / CH) : size.w - 20
+  const full = { x: (size.w - fullW) / 2, y: size.sat + (size.w > size.h ? 24 : 10), w: fullW, h: fullH }
 
   const [mi, setMi] = useState(() => LAB_MODES.indexOf(start))
   const mode = LAB_MODES[mi]
@@ -272,7 +276,7 @@ export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
   })()
 
   const open = phase === 'open'
-  const k = Math.min(1, full.w / 382)
+  const k = Math.min(1.25, full.w / 382)
 
   return (
     <div ref={root} className="relative h-full overflow-hidden bg-surface" style={{ touchAction: 'none' }}>

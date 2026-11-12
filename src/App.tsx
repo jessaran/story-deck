@@ -6,6 +6,7 @@ import { Home } from './screens/Home'
 import { Lab } from './screens/Lab'
 import { Onboarding } from './screens/Onboarding'
 import { TipDay } from './screens/TipDay'
+import { useWide } from './lib/useWide'
 import { StoreProvider, useStore } from './state/store'
 
 function Shell() {
@@ -33,10 +34,11 @@ function Shell() {
 }
 
 export function App() {
+  const wide = useWide()
   return (
     <StoreProvider>
       <HashRouter>
-        <div className="relative mx-auto flex h-full max-w-[430px] flex-col overflow-hidden bg-surface shadow-[0_0_0_1px_rgba(23,21,15,.06)]">
+        <div className={`relative mx-auto flex h-full flex-col overflow-hidden bg-surface ${wide ? 'w-full' : 'max-w-[430px] shadow-[0_0_0_1px_rgba(23,21,15,.06)]'}`}>
           <Shell />
           <UpdatePrompt />
         </div>
