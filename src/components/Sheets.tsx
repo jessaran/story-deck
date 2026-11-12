@@ -85,9 +85,9 @@ export function TutorialSheet({ mode, onClose }: { mode: ModeKey | null; onClose
 }
 
 export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { state, persisted, clearHist } = useStore()
+  const { state, persisted, clearHist, wipeAll } = useStore()
   const navigate = useNavigate()
-  const [confirm, setConfirm] = useState(false)
+  const [confirm, setConfirm] = useState<false | 'hist' | 'all'>(false)
   const close = () => {
     setConfirm(false)
     onClose()
@@ -123,7 +123,7 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
             <Mascot size={24} tone="white" />
             <div className="t-mono text-[8.5px] text-surface/80">Funciona sin conexión</div>
           </div>
-          <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este teléfono: sin cuenta, sin servidor, sin sincronizar.</p>
+          <p className="t-serif mt-2.5 text-[16px] leading-[1.3]">El mazo es fijo y vive dentro de la app. Tus tiradas se guardan solo en este dispositivo: sin cuenta, sin servidor, sin cookies, sin seguimiento.</p>
         </div>
         {!persisted && (
           <p role="alert" className="mt-2.5 border border-break px-4 py-3 text-[13px] font-medium text-muted">
@@ -150,17 +150,24 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
           {state.hist.length ? state.hist.slice(0, 3).map((h, i) => <HistCard key={i} h={h} />) : <p className="t-serif py-3 text-[16px] text-muted">Aún no has robado ninguna carta.</p>}
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5 flex flex-col gap-2">
           {confirm ? (
             <div className="border border-ink p-4" role="alertdialog" aria-label="Confirmar borrado">
-              <p className="text-[13.5px] font-medium leading-snug">¿Borrar tus últimas tiradas? El contador de cartas robadas y tu colección de Tip del día se mantienen.</p>
+              <p className="text-[13.5px] font-medium leading-snug">
+                {confirm === 'all'
+                  ? '¿Borrar todos tus datos de este dispositivo? Se borran tu nombre, el contador, tus tiradas y tu colección de Tip del día. No se puede deshacer.'
+                  : '¿Borrar tus últimas tiradas? El contador de cartas robadas y tu colección de Tip del día se mantienen.'}
+              </p>
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"
                   className="btn btn-primary flex-1"
                   onClick={() => {
                     buzz(14)
-                    clearHist()
+                    if (confirm === 'all') {
+                      close()
+                      wipeAll()
+                    } else clearHist()
                     setConfirm(false)
                   }}
                 >
@@ -172,9 +179,14 @@ export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => 
               </div>
             </div>
           ) : (
-            <button type="button" className="btn btn-ghost w-full" disabled={!state.hist.length} onClick={() => setConfirm(true)}>
-              Borrar mis últimas tiradas
-            </button>
+            <>
+              <button type="button" className="btn btn-ghost w-full" disabled={!state.hist.length} onClick={() => setConfirm('hist')}>
+                Borrar mis últimas tiradas
+              </button>
+              <button type="button" className="t-ui py-2 text-[10px] text-muted2 underline decoration-ink/20 underline-offset-4 hover:text-ink" onClick={() => setConfirm('all')}>
+                Borrar todos mis datos
+              </button>
+            </>
           )}
         </div>
       </div>

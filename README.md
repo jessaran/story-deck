@@ -19,6 +19,13 @@ Todo el contenido está en [`src/content.json`](src/content.json) (69 cartas de 
 
 Tras la primera visita funciona sin conexión. Cuando se publica una versión nueva, la app muestra un aviso «Actualizar».
 
+## Privacidad y seguridad
+
+- Sin cuentas, sin servidor, sin cookies, sin analítica ni seguimiento. La app no hace ninguna petición a otros dominios: tipografías, imágenes y cartas van dentro.
+- Lo único que se guarda es tu nombre, el contador, las 5 últimas tiradas y la colección de Tip del día, en el `localStorage` de tu navegador (clave `storydeck.v3`). Se valida al leerlo.
+- Desde la cuenta se puede borrar el historial o **todos los datos** del dispositivo.
+- En producción, una política de seguridad de contenido (CSP) solo permite recursos del propio sitio, y `referrer` está en `no-referrer`. El enlace a jessaran.com se abre con `noopener noreferrer`.
+
 ## Desarrollo
 
 ```bash

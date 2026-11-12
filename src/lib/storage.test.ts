@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { emptyState, load, sanitize, save, STORE_KEY } from './storage'
+import { emptyState, load, sanitize, save, STORE_KEY, wipe } from './storage'
 
 function mem(init: Record<string, string> = {}) {
   const m = new Map(Object.entries(init))
@@ -55,5 +55,15 @@ describe('almacén local', () => {
   it('si el navegador no deja escribir, devuelve false sin lanzar', () => {
     const ls = { ...mem(), setItem: () => { throw new Error('QuotaExceeded') } }
     expect(save(emptyState(), ls)).toBe(false)
+  })
+})
+
+describe('borrar todo', () => {
+  it('quita el almacén y las claves antiguas que se migrarían', () => {
+    const m = new Map<string, string>([[STORE_KEY, '{}'], ['lumo.v3', '{}'], ['lumo.onb.v1', '{"done":true}'], ['otra.app', 'x']])
+    const ls = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k) }
+    wipe(ls)
+    expect([...m.keys()]).toEqual(['otra.app'])
+    expect(load(ls)).toEqual(emptyState())
   })
 })

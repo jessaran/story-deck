@@ -103,3 +103,15 @@ function safeLocalStorage(): Storage | undefined {
     return undefined
   }
 }
+
+/** Borra todo lo que la app guarda en este navegador, incluidas las claves antiguas que migra. */
+export function wipe(ls: Storage | undefined = safeLocalStorage()): void {
+  if (!ls) return
+  for (const k of [STORE_KEY, 'lumo.v3', 'lumo.deck.v2', 'lumo.tip.v1', 'lumo.onb.v1']) {
+    try {
+      ls.removeItem(k)
+    } catch {
+      /* nada que borrar */
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "story-deck", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--", "--port", "5174"], "port": 5174 }
+    { "name": "story-deck", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--", "--port", "5174"], "port": 5174 },
+    { "name": "story-deck-prod", "runtimeExecutable": "npx", "runtimeArgs": ["vite", "preview", "--port", "5175", "--strictPort"], "port": 5175 }
   ]
 }

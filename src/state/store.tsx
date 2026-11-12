@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { applyMatch, pushHist } from '../lib/rules'
-import { load, save, type AppState, type HistEntry } from '../lib/storage'
+import { emptyState, load, save, wipe, type AppState, type HistEntry } from '../lib/storage'
 
 type Store = {
   state: AppState
@@ -9,6 +9,8 @@ type Store = {
   finishOnboarding: (name: string) => void
   logCard: (entry: HistEntry) => void
   clearHist: () => void
+  /** Borra nombre, contador, historial y colección: la app vuelve a la bienvenida. */
+  wipeAll: () => void
   matchTip: (id: number) => void
   announce: (msg: string) => void
 }
@@ -33,6 +35,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const logCard = useCallback((entry: HistEntry) => setState((s) => ({ ...s, draws: s.draws + 1, hist: pushHist(s.hist, entry) })), [])
   // Borrar tiradas no toca el contador ni la colección de Tip Day.
   const clearHist = useCallback(() => setState((s) => ({ ...s, hist: [] })), [])
+  const wipeAll = useCallback(() => {
+    wipe()
+    first.current = true // no volver a escribir el estado vacío recién borrado
+    setState(emptyState())
+  }, [])
   const matchTip = useCallback((id: number) => setState((s) => ({ ...s, tip: applyMatch(s.tip, id) })), [])
   const announce = useCallback((msg: string) => {
     setLive('')
@@ -40,8 +47,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const value = useMemo(
-    () => ({ state, persisted, finishOnboarding, logCard, clearHist, matchTip, announce }),
-    [state, persisted, finishOnboarding, logCard, clearHist, matchTip, announce],
+    () => ({ state, persisted, finishOnboarding, logCard, clearHist, wipeAll, matchTip, announce }),
+    [state, persisted, finishOnboarding, logCard, clearHist, wipeAll, matchTip, announce],
   )
   return (
     <Ctx.Provider value={value}>
