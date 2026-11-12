@@ -3,7 +3,7 @@ import { buzz } from '../lib/haptics'
 import fab from '../assets/tip-fab.webp'
 
 /** Botón flotante de Tip Day: el pato sobre el círculo azul, sin texto, flotando. */
-export function TipFab({ bottom }: { bottom: number }) {
+export function TipFab() {
   const navigate = useNavigate()
   return (
     <button
@@ -13,8 +13,8 @@ export function TipFab({ bottom }: { bottom: number }) {
         buzz(10)
         navigate('/tip')
       }}
-      className="anim-float-tip absolute right-3 z-40 block w-[76px] transition-transform hover:scale-105 active:scale-95"
-      style={{ bottom }}
+      className="anim-float-tip absolute right-3 z-40 block w-[88px] transition-transform hover:scale-105 active:scale-95"
+      style={{ bottom: 'calc(var(--sab) + 18px)' }}
     >
       <img src={fab} alt="" aria-hidden draggable={false} width={240} height={217} className="block h-auto w-full drop-shadow-[0_8px_14px_rgba(23,21,15,.28)]" />
     </button>

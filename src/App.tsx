@@ -1,6 +1,8 @@
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router'
+import { TipFab } from './components/TipFab'
 import { UpdatePrompt } from './components/UpdatePrompt'
 import { History } from './screens/History'
+import { Home } from './screens/Home'
 import { Lab } from './screens/Lab'
 import { Onboarding } from './screens/Onboarding'
 import { TipDay } from './screens/TipDay'
@@ -15,12 +17,17 @@ function Shell() {
       {/* key: cada cambio de modo reinicia la pantalla y su entrada */}
       <div key={pathname} className="flex min-h-0 flex-1 flex-col">
         <Routes>
-          <Route path="/" element={<Lab />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/spark" element={<Lab start="spark" />} />
+          <Route path="/craft" element={<Lab start="craft" />} />
+          <Route path="/break" element={<Lab start="break" />} />
           <Route path="/tip" element={<TipDay />} />
           <Route path="/ultimas" element={<History />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
+      {/* Tip Day solo flota en el inicio */}
+      {pathname === '/' && <TipFab />}
     </>
   )
 }

@@ -1,10 +1,10 @@
 import { animate, AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform, type MotionValue, type PanInfo } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { X } from 'lucide-react'
+import { Link } from 'react-router'
 import logo from '../assets/logo-stack.webp'
 import { CardBack, type Face } from '../components/CardFaces'
 import { GestureHint } from '../components/GestureHint'
-import { AccountSheet } from '../components/Sheets'
-import { TipFab } from '../components/TipFab'
 import { breakCards, BREAK_COLOR, craft, CRAFT_ORDER, spark, SPARK_ORDER, type CraftKey } from '../lib/content'
 import { buzz } from '../lib/haptics'
 import { MODES } from '../lib/modes'
@@ -12,7 +12,7 @@ import { pickNoRepeat, seedPhrase } from '../lib/rules'
 import { useStore } from '../state/store'
 
 /**
- * Pantalla principal: el mazo en la mano. Se roba arrastrando hacia arriba y la carta
+ * El mazo en la mano (Spark, Craft y Break). Se roba arrastrando hacia arriba y la carta
  * ocupa toda la pantalla; se suelta lanzándola.
  * shortcut: sin carta Y SI… en Spark; añadirla si se echa de menos.
  */
@@ -48,9 +48,8 @@ function Layer({ i, tilt, dx, dy, jump, style, color }: { i: number; tilt: numbe
   )
 }
 
-export function Lab() {
-  const { state, logCard, announce } = useStore()
-  const [account, setAccount] = useState(false)
+export function Lab({ start }: { start: (typeof LAB_MODES)[number] }) {
+  const { logCard, announce } = useStore()
   const reduce = useReducedMotion()
   const root = useRef<HTMLDivElement>(null)
   const probe = useRef<HTMLDivElement>(null)
@@ -71,7 +70,7 @@ export function Lab() {
   const rest = { x: (size.w - W) / 2, y: size.h * 0.6, w: W, h: H }
   const full = { x: 10, y: size.sat + 10, w: size.w - 20, h: size.h - size.sat - size.sab - 20 }
 
-  const [mi, setMi] = useState(0)
+  const [mi, setMi] = useState(() => LAB_MODES.indexOf(start))
   const mode = LAB_MODES[mi]
   const m = MODES[mode]
   const [cat, setCat] = useState<CraftKey>('PERSONAJE')
@@ -283,17 +282,9 @@ export function Lab() {
       <div className="absolute inset-x-0 top-0 z-30 px-[22px]" style={{ paddingTop: 'calc(var(--sat) + 14px)' }}>
         <div className="flex items-start justify-between">
           <img src={logo} alt="Story Deck" width={478} height={640} draggable={false} className="block h-[56px] w-auto" />
-          <button
-            type="button"
-            onClick={() => {
-              buzz(8)
-              setAccount(true)
-            }}
-            aria-label={`Cuenta de ${state.name || 'usuario'}: ${state.draws} cartas robadas`}
-            className="t-serif flex size-9 items-center justify-center rounded-full bg-ink text-[19px] text-surface"
-          >
-            {(state.name.trim()[0] ?? 's').toLowerCase()}
-          </button>
+          <Link to="/" aria-label="Volver al inicio" className="flex size-8 items-center justify-center border border-ink/20 hover:border-ink">
+            <X size={15} aria-hidden />
+          </Link>
         </div>
         <div role="tablist" aria-label="Mazo" className="mt-3 flex justify-center gap-6">
           {LAB_MODES.map((key, i) => (
@@ -436,9 +427,6 @@ export function Lab() {
           )}
         </AnimatePresence>
       </motion.div>
-      {/* Tip Day flota en el hueco blanco, por encima del mazo */}
-      {phase === 'deck' && <TipFab bottom={size.h - rest.y + 18} />}
-      <AccountSheet open={account} onClose={() => setAccount(false)} />
     </div>
   )
 }

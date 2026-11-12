@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { Drawer } from 'vaul'
 import { DRAW_DECK_SIZE, PALETTE } from '../lib/content'
 import { buzz } from '../lib/haptics'
+import { MODES, type ModeKey } from '../lib/modes'
 import { useStore } from '../state/store'
 import { Mascot } from './Mascot'
 import { HistCard } from './HistCard'
@@ -35,6 +36,52 @@ function CloseBtn({ onClose, dark = true }: { onClose: () => void; dark?: boolea
 }
 
 const Grabber = () => <div aria-hidden className="absolute left-1/2 top-2 h-1 w-9 -translate-x-1/2 rounded-full bg-ink/20" />
+
+export function TutorialSheet({ mode, onClose }: { mode: ModeKey | null; onClose: () => void }) {
+  const navigate = useNavigate()
+  const [last, setLast] = useState<ModeKey>('spark')
+  if (mode && mode !== last) setLast(mode)
+  const m = MODES[mode ?? last]
+  return (
+    <Sheet open={!!mode} onClose={onClose} top={96} title={`Cómo funciona ${m.title}`}>
+      <div className="relative shrink-0 px-[22px] pb-5 pt-6" style={{ background: m.color }}>
+        <Grabber />
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="t-mono text-[8.5px]" style={{ opacity: 'var(--dim)' }}>
+              {m.mech}
+            </div>
+            <div className="t-display mt-2.5 text-[38px]">{m.title}</div>
+          </div>
+          <CloseBtn onClose={onClose} />
+        </div>
+      </div>
+      <ol className="flex-1 overflow-y-auto px-[22px] py-5" data-vaul-no-drag>
+        {m.steps.map(([t, d], i) => (
+          <li key={t} className="flex gap-4 border-b border-rule py-4 first:pt-1 last:border-0">
+            <span className="font-display w-7 shrink-0 text-[20px] font-extrabold leading-none text-blue">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <div className="font-sans text-[15px] font-bold leading-tight">{t}</div>
+              <p className="mt-1.5 text-[13.5px] font-medium leading-[1.5] text-muted">{d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="shrink-0 px-[22px] pt-2" style={{ paddingBottom: 'calc(var(--sab) + 18px)' }}>
+        <button
+          type="button"
+          className="btn btn-primary w-full"
+          onClick={() => {
+            onClose()
+            navigate(`/${mode ?? last}`)
+          }}
+        >
+          Abrir {m.title} →
+        </button>
+      </div>
+    </Sheet>
+  )
+}
 
 export function AccountSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { state, persisted, clearHist } = useStore()
